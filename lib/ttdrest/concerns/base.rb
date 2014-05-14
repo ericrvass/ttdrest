@@ -85,15 +85,6 @@ module Ttdrest
         connection.verify_mode = OpenSSL::SSL::VERIFY_NONE
         return connection
       end
-
-      def auth_header(client_id, client_secret)
-        credential = "#{client_id}:#{client_secret}"
-        "Basic #{Base64.encode64(credential)}".delete("\n")
-      end
-
-      def api_header(oauth_token)
-        "Bearer #{oauth_token}"
-      end  
     end
   end
 end
