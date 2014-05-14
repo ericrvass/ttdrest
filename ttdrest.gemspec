@@ -8,12 +8,13 @@ Gem::Specification.new do |spec|
   spec.version       = Ttdrest::VERSION
   spec.authors       = ["Eric Vass"]
   spec.email         = ["ericrvass@gmail.com"]
-  spec.summary       = %q{TODO: Write a short summary. Required.}
-  spec.description   = %q{TODO: Write a longer description. Optional.}
+  spec.summary       = %q{TTD API Ruby Client}
+  #spec.description   = %q{TODO: Write a longer description. Optional.}
   spec.homepage      = ""
   spec.license       = "MIT"
 
-  spec.files         = `git ls-files -z`.split("\x0")
+  #spec.files         = `git ls-files -z`.split("\x0")
+  spec.files         = Dir["README.md","Gemfile","Rakefile", "lib/*", "lib/ttdrest/*", "lib/ttdrest/concerns/*"]
   spec.executables   = spec.files.grep(%r{^bin/}) { |f| File.basename(f) }
   spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
   spec.require_paths = ["lib"]

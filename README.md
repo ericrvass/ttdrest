@@ -1,6 +1,6 @@
 # Ttdrest
 
-TODO: Write a gem description
+TTD API Ruby Client
 
 ## Installation
 
