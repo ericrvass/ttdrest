@@ -3,7 +3,6 @@ module Ttdrest
     module Campaign
 
       def get_campaigns(options = {})
-        auth_token = self.auth_token || options[:auth_token]
         advertiser_id = self.advertiser_id || options[:advertiser_id]
         path = "/campaigns/#{advertiser_id}"
         params = {}
@@ -11,8 +10,14 @@ module Ttdrest
         return result
       end
       
+      def get_campaign(campaign_id, options = {})
+        path = "/campaign/#{campaign_id}"
+        params = {}
+        result = get(path, params)
+        return result
+      end
+      
       def create_campaign(name, budget_in_dollars, start_date, campaign_conversion_reporting_columns = [], options = {})
-        auth_token = self.auth_token || options[:auth_token]
         advertiser_id = self.advertiser_id || options[:advertiser_id]
         path = "/campaign"
         content_type = 'application/json'

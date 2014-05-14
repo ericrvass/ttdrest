@@ -1,17 +1,25 @@
 require "ttdrest/concerns/base"
+require "ttdrest/concerns/ad_group"
+require "ttdrest/concerns/audience"
 require "ttdrest/concerns/campaign"
+require "ttdrest/concerns/creative"
+require "ttdrest/concerns/data_group"
 
 module Ttdrest
   # Interface for using the TTD REST API
   class Client
     include Ttdrest::Concerns::Base
+    include Ttdrest::Concerns::AdGroup
+    include Ttdrest::Concerns::Audience
     include Ttdrest::Concerns::Campaign
+    include Ttdrest::Concerns::Creative
+    include Ttdrest::Concerns::DataGroup
     
-    # The OAuth client login
+    # The Auth client login
     attr_accessor :client_login
-    # The OAuth client password
+    # The Auth client password
     attr_accessor :client_password
-    # The OAuth access token
+    # The Auth access token
     attr_accessor :auth_token
     # The Host
     attr_accessor :host

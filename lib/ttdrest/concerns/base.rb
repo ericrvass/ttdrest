@@ -4,6 +4,8 @@ module Ttdrest
   module Concerns
     module Base
       
+      #TODO: PUT Updates
+      
       VERSION = "v2"
       RETRIES = 2
       
@@ -73,27 +75,6 @@ module Ttdrest
           return result
         rescue Exception => e 
           puts 'Error Authenticating: ' + e.message 
-        end 
-      end
-
-      def file_post(path, content_type, file)
-        tries = RETRIES
-        begin
-          request = Net::HTTP::Post.new(path, initheader = {'Content-Type' =>content_type})
-          request['TTD-Auth'] = self.auth_token
-          request.body = file
-          response = http_connection.request(request)
-          check_response(response)
-          result = response.body.blank? ? "" : JSON.parse(response.body)
-          return result
-        rescue AuthorizationFailedError
-          tries -= 1
-          if tries > 0
-            self.auth_token = authenticate
-            retry
-          end
-        rescue Exception => e 
-          puts 'Error In File POST: ' + e.message 
         end 
       end
 
