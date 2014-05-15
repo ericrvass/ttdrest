@@ -23,7 +23,7 @@ module Ttdrest
         content_type = 'application/json'
         creative_data = {
           "AdvertiserId" => advertiser_id,
-          "CreativeName " => name
+          "CreativeName" => name
           }
         params = options[:params] || {}
         if !params[:description].nil?
