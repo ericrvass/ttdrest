@@ -93,8 +93,12 @@ module Ttdrest
           end
           rtb_ad_group_data = rtb_ad_group_data.merge({"AudienceTargeting" => audience_data})
         end
+        if !params[:geo_segment_adjustments].nil?
+          rtb_ad_group_data = rtb_ad_group_data.merge({"GeoSegmentAdjustments" => params[:geo_segment_adjustments]})
+        else
+          rtb_ad_group_data = rtb_ad_group_data.merge({"GeoSegmentAdjustments" => [{"Id" => "hjapafa", "Adjustment" => 1.0}]}) # defaults to USA
+        end
         #TODO: AdFormatAdjustments 
-        #TODO: GeoSegmentAdjustments 
         #TODO: UserHourOfWeekAdjustments 
         #TODO: SupplyVendorAdjustments 
         #TODO: BrowserAdjustments 
