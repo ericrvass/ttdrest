@@ -13,7 +13,10 @@ module Ttdrest
           }
         params = options[:params] || {}
         if !params[:search_term].nil?
-          data_group_data = data_group_data.merge({"SearchTerm " => params[:search_term]})
+          data_group_data = data_group_data.merge({"SearchTerm" => params[:search_term]})
+        end
+        if !params[:data_types].nil?
+          data_group_data = data_group_data.merge({"DataTypes" => params[:data_types]})
         end
 
         #TODO: query DataTypes 
