@@ -4,6 +4,7 @@ require "ttdrest/concerns/audience"
 require "ttdrest/concerns/campaign"
 require "ttdrest/concerns/creative"
 require "ttdrest/concerns/data_group"
+require "ttdrest/concerns/tracking_tags"
 
 module Ttdrest
   # Interface for using the TTD REST API
@@ -14,6 +15,7 @@ module Ttdrest
     include Ttdrest::Concerns::Campaign
     include Ttdrest::Concerns::Creative
     include Ttdrest::Concerns::DataGroup
+    include Ttdrest::Concerns::TrackingTags
     
     # The Auth client login
     attr_accessor :client_login
