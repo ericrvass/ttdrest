@@ -19,7 +19,6 @@ module Ttdrest
           data_group_data = data_group_data.merge({"DataTypes" => params[:data_types]})
         end
 
-        #TODO: query DataTypes 
         #TODO: SortFields
         
         result = data_post(path, content_type, data_group_data.to_json)

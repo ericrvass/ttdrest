@@ -17,7 +17,7 @@ module Ttdrest
         return result
       end
       
-      def create_audience(name, budget_in_dollars, start_date, included_data_group_ids = [], options = {})
+      def create_audience(name, included_data_group_ids = [], options = {})
         advertiser_id = self.advertiser_id || options[:advertiser_id]
         path = "/audience"
         content_type = 'application/json'
