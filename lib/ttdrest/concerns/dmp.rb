@@ -4,7 +4,7 @@ module Ttdrest
 
       def get_first_party_data(page_start_index, page_size, options = {})
         advertiser_id = self.advertiser_id || options[:advertiser_id]
-        path = "/#{VERSION}/dmp/firstparty/data"
+        path = "/dmp/firstparty/data"
         content_type = 'application/json'
         data_group_data = {
           "AdvertiserId" => advertiser_id,

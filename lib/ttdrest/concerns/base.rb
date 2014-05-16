@@ -26,7 +26,7 @@ module Ttdrest
       def get(path, params)
         tries = RETRIES
         begin
-          request = Net::HTTP::Get.new(params.blank? ? path : "#{path}?".concat(params.collect { |k,v| "#{k}=#{CGI::escape(v.to_s)}" }.join('&')))
+          request = Net::HTTP::Get.new(params.blank? ? "/#{VERSION}#{path}" : "/#{VERSION}#{path}?".concat(params.collect { |k,v| "#{k}=#{CGI::escape(v.to_s)}" }.join('&')))
           request['TTD-Auth'] = self.auth_token
           response = http_connection.request(request)
           check_response(response)
@@ -46,7 +46,7 @@ module Ttdrest
       def data_post(path, content_type, json_data)
         tries = RETRIES
         begin
-          request = Net::HTTP::Post.new(path, initheader = {'Content-Type' => content_type})
+          request = Net::HTTP::Post.new("/#{VERSION}#{path}", initheader = {'Content-Type' => content_type})
           request['TTD-Auth'] = self.auth_token
           request.body = json_data
           response = http_connection.request(request)
