@@ -19,7 +19,7 @@ module Ttdrest
       
       def create_audience(name, budget_in_dollars, start_date, included_data_group_ids = [], options = {})
         advertiser_id = self.advertiser_id || options[:advertiser_id]
-        path = "/campaign"
+        path = "/audience"
         content_type = 'application/json'
         audience_data = {
           "AdvertiserId" => advertiser_id,

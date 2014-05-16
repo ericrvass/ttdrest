@@ -19,7 +19,7 @@ module Ttdrest
       
       def create_data_group(name, options = {})
         advertiser_id = self.advertiser_id || options[:advertiser_id]
-        path = "/campaign"
+        path = "/datagroup"
         content_type = 'application/json'
         data_group_data = {
           "AdvertiserId" => advertiser_id,
