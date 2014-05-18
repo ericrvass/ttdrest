@@ -24,7 +24,7 @@ module Ttdrest
         audience_data = {
           "AdvertiserId" => advertiser_id,
           "AudienceName" => name,
-          "IncludedDataGroupIds " => included_data_group_ids
+          "IncludedDataGroupIds" => included_data_group_ids
           }
         params = options[:params] || {}
         if !params[:description].nil?
