@@ -23,7 +23,7 @@ module Ttdrest
         content_type = 'application/json'
         data_group_data = {
           "AdvertiserId" => advertiser_id,
-          "DataGroupName " => name
+          "DataGroupName" => name
           }
         params = options[:params] || {}
         if !params[:description].nil?
