@@ -25,7 +25,33 @@ module Ttdrest
         return result
       end
       
-      #TODO: 3rd Party Data
+      def get_third_party_data(page_start_index, page_size, options = {})
+        advertiser_id = self.advertiser_id || options[:advertiser_id]
+        path = "/dmp/thirdparty/data"
+        content_type = 'application/json'
+        data_group_data = {
+          "AdvertiserId" => advertiser_id,
+          "PageStartIndex" => page_start_index,
+          "PageSize" => page_size
+          }
+        params = options[:params] || {}
+        if !params[:search_term].nil?
+          data_group_data = data_group_data.merge({"SearchTerm" => params[:search_term]})
+        end
+        if !params[:category_ids].nil?
+          data_group_data = data_group_data.merge({"CategoryIds" => params[:category_ids]})
+        end
+        if !params[:brand_ids].nil?
+          data_group_data = data_group_data.merge({"BrandIds" => params[:brand_ids]})
+        end
+
+        #TODO: SortFields
+        #TODO: DataRateFilters
+        
+        result = data_post(path, content_type, data_group_data.to_json)
+        return result
+      end
+      
     end
   end
 end
