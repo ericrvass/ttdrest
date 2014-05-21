@@ -22,15 +22,51 @@ module Ttdrest
         params = options[:params] || {}
         
         # Build main ad group data hash
-        ad_group_data = {
-          "CampaignId" => campaign_id,
-          "AdGroupName" => name,
-          "BudgetInUSDollars" => budget_in_dollars,
-          "DailyBudgetInUSDollars" => daily_budget_in_dollars,
-          "PacingEnabled" => pacing_enabled,
-          "BaseBidCPMInUSDollars" => base_bid_cpm_in_dollars,
-          "MaxBidCPMInUSDollars" => max_bid_cpm_in_dollars
-          }
+        ad_group_data = build_ad_group_data(nil, campaign_id, name, budget_in_dollars, daily_budget_in_dollars, pacing_enabled, base_bid_cpm_in_dollars, max_bid_cpm_in_dollars, creative_ids, params)
+
+        result = data_post(path, content_type, ad_group_data.to_json)
+        return result
+      end
+      
+      def update_ad_group(ad_group_id, campaign_id, name, budget_in_dollars, daily_budget_in_dollars, pacing_enabled, base_bid_cpm_in_dollars, max_bid_cpm_in_dollars, creative_ids = [], options = {})
+        path = "/adgroup"
+        content_type = 'application/json'
+        params = options[:params] || {}
+        
+        # Build main ad group data hash
+        ad_group_data = build_ad_group_data(ad_group_id, campaign_id, name, budget_in_dollars, daily_budget_in_dollars, pacing_enabled, base_bid_cpm_in_dollars, max_bid_cpm_in_dollars, creative_ids, params)
+
+        result = data_put(path, content_type, ad_group_data.to_json)
+        return result
+      end
+      
+      def build_ad_group_data(ad_group_id, campaign_id, name, budget_in_dollars, daily_budget_in_dollars, pacing_enabled, base_bid_cpm_in_dollars, max_bid_cpm_in_dollars, creative_ids = [], params = {})
+        # Build main ad group data hash
+        ad_group_data = {}
+        if !ad_group_id.nil?
+          ad_group_data = ad_group_data.merge({"AdGroupId" => ad_group_id})
+        end
+        if !campaign_id.nil?
+          ad_group_data = ad_group_data.merge({"CampaignId" => campaign_id})
+        end
+        if !name.nil?
+          ad_group_data = ad_group_data.merge({"AdGroupName" => name})
+        end
+        if !budget_in_dollars.nil?
+          ad_group_data = ad_group_data.merge({"BudgetInUSDollars" => budget_in_dollars})
+        end
+        if !daily_budget_in_dollars.nil?
+          ad_group_data = ad_group_data.merge({"DailyBudgetInUSDollars" => daily_budget_in_dollars})
+        end
+        if !pacing_enabled.nil?
+          ad_group_data = ad_group_data.merge({"PacingEnabled" => pacing_enabled})
+        end
+        if !base_bid_cpm_in_dollars.nil?
+          ad_group_data = ad_group_data.merge({"BaseBidCPMInUSDollars" => base_bid_cpm_in_dollars})
+        end
+        if !max_bid_cpm_in_dollars.nil?
+          ad_group_data = ad_group_data.merge({"MaxBidCPMInUSDollars" => max_bid_cpm_in_dollars})
+        end
         if !params[:description].nil?
           ad_group_data = ad_group_data.merge({"Description" => params[:description]})
         end
@@ -42,14 +78,23 @@ module Ttdrest
         end
         
         # Build RTB ad group data hash
-        rtb_ad_group_data = {
-          "BudgetInUSDollars" => budget_in_dollars,
-          "DailyBudgetInUSDollars" => daily_budget_in_dollars,
-          "PacingEnabled" => pacing_enabled,
-          "BaseBidCPMInUSDollars" => base_bid_cpm_in_dollars,
-          "MaxBidCPMInUSDollars" => max_bid_cpm_in_dollars
-          }
-        if !creative_ids.blank?
+        rtb_ad_group_data = {}
+        if !budget_in_dollars.nil?
+          rtb_ad_group_data = rtb_ad_group_data.merge({"BudgetInUSDollars" => budget_in_dollars})
+        end
+        if !daily_budget_in_dollars.nil?
+          rtb_ad_group_data = rtb_ad_group_data.merge({"DailyBudgetInUSDollars" => daily_budget_in_dollars})
+        end
+        if !pacing_enabled.nil?
+          rtb_ad_group_data = rtb_ad_group_data.merge({"PacingEnabled" => pacing_enabled})
+        end
+        if !base_bid_cpm_in_dollars.nil?
+          rtb_ad_group_data = rtb_ad_group_data.merge({"BaseBidCPMInUSDollars" => base_bid_cpm_in_dollars})
+        end
+        if !max_bid_cpm_in_dollars.nil?
+          rtb_ad_group_data = rtb_ad_group_data.merge({"MaxBidCPMInUSDollars" => max_bid_cpm_in_dollars})
+        end
+        if !creative_ids.empty? 
           rtb_ad_group_data = rtb_ad_group_data.merge({"CreativeIds" => creative_ids})
         end
         if !params[:frequency_pricing_slope].nil?
@@ -106,10 +151,11 @@ module Ttdrest
         #TODO: OSFamilyAdjustments 
         #TODO: DeviceTypeAdjustments 
         
-        ad_group_data = ad_group_data.merge({"RTBAttributes" => rtb_ad_group_data})
-
-        result = data_post(path, content_type, ad_group_data.to_json)
-        return result
+        if !rtb_ad_group_data.empty?
+          ad_group_data = ad_group_data.merge({"RTBAttributes" => rtb_ad_group_data})
+        end
+        
+        return ad_group_data
       end
       
     end

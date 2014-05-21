@@ -63,6 +63,27 @@ module Ttdrest
           puts 'Error In Data POST: ' + e.message 
         end 
       end
+    
+      def data_put(path, content_type, json_data)
+        tries = RETRIES
+        begin
+          request = Net::HTTP::Put.new("/#{VERSION}#{path}", initheader = {'Content-Type' => content_type})
+          request['TTD-Auth'] = self.auth_token
+          request.body = json_data
+          response = http_connection.request(request)
+          check_response(response)
+          result = response.body.blank? ? "" : JSON.parse(response.body)
+          return result
+        rescue AuthorizationFailedError
+          tries -= 1
+          if tries > 0
+            self.auth_token = authenticate
+            retry
+          end
+        rescue Exception => e 
+          puts 'Error In Data POST: ' + e.message 
+        end 
+      end
 
       def auth_post(client_login, client_password)
         begin

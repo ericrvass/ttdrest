@@ -5,6 +5,7 @@ require "ttdrest/concerns/campaign"
 require "ttdrest/concerns/creative"
 require "ttdrest/concerns/data_group"
 require "ttdrest/concerns/dmp"
+require "ttdrest/concerns/hd_reports"
 require "ttdrest/concerns/ip_targeting_list"
 require "ttdrest/concerns/tracking_tags"
 
@@ -18,6 +19,7 @@ module Ttdrest
     include Ttdrest::Concerns::Creative
     include Ttdrest::Concerns::DataGroup
     include Ttdrest::Concerns::Dmp
+    include Ttdrest::Concerns::HdReports
     include Ttdrest::Concerns::IpTargetingList
     include Ttdrest::Concerns::TrackingTags
     
