@@ -17,18 +17,45 @@ module Ttdrest
         return result
       end
       
+      def update_campaign(campaign_id, name, budget_in_dollars, start_date, campaign_conversion_reporting_columns = [], options = {})
+        path = "/campaign"
+        content_type = 'application/json'
+        params = options[:params] || {}
+        
+        # Build campaign data hash
+        campaign_data = build_campaign_data(campaign_id, name, budget_in_dollars, start_date, campaign_conversion_reporting_columns, params)
+
+        result = data_put(path, content_type, ad_group_data.to_json)
+        return result
+      end
+      
       def create_campaign(name, budget_in_dollars, start_date, campaign_conversion_reporting_columns = [], options = {})
         advertiser_id = self.advertiser_id || options[:advertiser_id]
         path = "/campaign"
         content_type = 'application/json'
+        params = options[:params] || {}
+        campaign_data = build_campaign_data(nil, name, budget_in_dollars, start_date, campaign_conversion_reporting_columns, params)
+        result = data_post(path, content_type, campaign_data.to_json)
+        return result
+      end
+      
+      def build_campaign_data(campaign_id, name, budget_in_dollars, start_date, campaign_conversion_reporting_columns = [], options = {})
         campaign_data = {
           "AdvertiserId" => advertiser_id,
-          "CampaignName" => name,
-          "BudgetInUSDollars" => budget_in_dollars,
-          "StartDate" => start_date,
           "CampaignConversionReportingColumns" => campaign_conversion_reporting_columns
           }
-        params = options[:params] || {}
+        if !campaign_id.nil?
+          campaign_data = campaign_data.merge({"CampaignId" => campaign_id})
+        end
+        if !name.blank?
+          campaign_data = campaign_data.merge({"CampaignName" => name})
+        end
+        if !budget_in_dollars.nil?
+          campaign_data = campaign_data.merge({"BudgetInUSDollars" => budget_in_dollars})
+        end
+        if !start_date.nil?
+          campaign_data = campaign_data.merge({"StartDate" => start_date})
+        end
         if !params[:description].nil?
           campaign_data = campaign_data.merge({"Description" => params[:description]})
         end
@@ -44,8 +71,7 @@ module Ttdrest
         if !params[:daily_budget_in_impressions].nil?
           campaign_data = campaign_data.merge({"DailyBudgetInImpressions" => params[:daily_budget_in_impressions]})
         end
-        result = data_post(path, content_type, campaign_data.to_json)
-        return result
+        return campaign_data
       end
       
     end
