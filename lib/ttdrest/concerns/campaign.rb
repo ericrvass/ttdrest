@@ -39,7 +39,7 @@ module Ttdrest
         return result
       end
       
-      def build_campaign_data(campaign_id, name, budget_in_dollars, start_date, campaign_conversion_reporting_columns = [], options = {})
+      def build_campaign_data(campaign_id, name, budget_in_dollars, start_date, campaign_conversion_reporting_columns = [], params = {})
         campaign_data = {
           "AdvertiserId" => advertiser_id,
           "CampaignConversionReportingColumns" => campaign_conversion_reporting_columns
