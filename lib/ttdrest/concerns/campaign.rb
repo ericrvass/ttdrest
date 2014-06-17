@@ -25,7 +25,7 @@ module Ttdrest
         # Build campaign data hash
         campaign_data = build_campaign_data(campaign_id, name, budget_in_dollars, start_date, campaign_conversion_reporting_columns, params)
 
-        result = data_put(path, content_type, ad_group_data.to_json)
+        result = data_put(path, content_type, campaign_data.to_json)
         return result
       end
       
