@@ -23,7 +23,7 @@ module Ttdrest
         
         # Build main ad group data hash
         ad_group_data = build_ad_group_data(nil, campaign_id, name, budget_in_dollars, daily_budget_in_dollars, pacing_enabled, base_bid_cpm_in_dollars, max_bid_cpm_in_dollars, creative_ids, params)
-
+        
         result = data_post(path, content_type, ad_group_data.to_json)
         return result
       end
@@ -35,7 +35,7 @@ module Ttdrest
         
         # Build main ad group data hash
         ad_group_data = build_ad_group_data(ad_group_id, campaign_id, name, budget_in_dollars, daily_budget_in_dollars, pacing_enabled, base_bid_cpm_in_dollars, max_bid_cpm_in_dollars, creative_ids, params)
-
+        
         result = data_put(path, content_type, ad_group_data.to_json)
         return result
       end
@@ -126,8 +126,8 @@ module Ttdrest
           audience_data = {
             "AudienceId" => params[:audience_id]
             }
-          if !params[:regency_adjustments].blank?
-            audience_data = audience_data.merge({"RecencyAdjustments" => params[:regency_adjustments]})
+          if !params[:recency_adjustments].blank?
+            audience_data = audience_data.merge({"RecencyAdjustments" => params[:recency_adjustments]})
           else
             audience_data = audience_data.merge({"RecencyAdjustments" => [{"RecencyWindowStartInMinutes" => 0, "Adjustment" => 1.0}]})
           end
