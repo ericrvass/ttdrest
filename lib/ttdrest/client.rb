@@ -1,5 +1,6 @@
 require "ttdrest/concerns/base"
 require "ttdrest/concerns/ad_group"
+require "ttdrest/concerns/advertiser"
 require "ttdrest/concerns/audience"
 require "ttdrest/concerns/campaign"
 require "ttdrest/concerns/creative"
@@ -14,6 +15,7 @@ module Ttdrest
   class Client
     include Ttdrest::Concerns::Base
     include Ttdrest::Concerns::AdGroup
+    include Ttdrest::Concerns::Advertiser
     include Ttdrest::Concerns::Audience
     include Ttdrest::Concerns::Campaign
     include Ttdrest::Concerns::Creative
