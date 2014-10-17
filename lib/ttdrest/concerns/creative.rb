@@ -56,6 +56,7 @@ module Ttdrest
         path = "/creative"
         content_type = 'application/json'
         creative_data = {
+          "CreativeId" => creative_id,
           "AdvertiserId" => advertiser_id,
           "CreativeName" => name
           }
