@@ -54,7 +54,7 @@ module Ttdrest
         if !params[:currency_code_id].nil?
           advertiser_data = advertiser_data.merge({"CurrencyCodeId" => params[:currency_code_id]})
         end
-        if !params[:attribution_click_lookback_window].nil?
+        if !params[:attribution_click_lookback_window_in_seconds].nil?
           advertiser_data = advertiser_data.merge({"AttributionClickLookbackWindowInSeconds" => params[:attribution_click_lookback_window_in_seconds]})
         end
         if !params[:attribution_impression_lookback_window_in_seconds].nil?
