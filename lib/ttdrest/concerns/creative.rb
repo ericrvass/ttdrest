@@ -75,10 +75,13 @@ module Ttdrest
         end
         
         image_data = {
-          "ImageContent" => image_content,
           "ClickthroughUrl" => clickthrough_url,
           "LandingPageUrl" => landing_page_url
           }
+
+        if !image_data.blank?
+          image_data = image_data.merge({"ImageContent" => image_content]})
+        end
         
         creative_data = creative_data.merge({"ImageAttributes" => image_data})
         
