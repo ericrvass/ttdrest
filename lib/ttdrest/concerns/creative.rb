@@ -80,7 +80,7 @@ module Ttdrest
           }
 
         if !image_data.blank?
-          image_data = image_data.merge({"ImageContent" => image_content]})
+          image_data = image_data.merge({"ImageContent" => image_content})
         end
         
         creative_data = creative_data.merge({"ImageAttributes" => image_data})
