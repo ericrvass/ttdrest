@@ -10,6 +10,13 @@ module Ttdrest
         return result
       end
 
+      def get_tracking_tag_types()
+        path = "/trackingtagtypes"
+        params = {}
+        result = get(path, params)
+        return result
+      end
+
       def create_tracking_tag(tracking_tag_name, tracking_tag_type_id, options = {})
         path = "/trackingtag"
         content_type = 'application/json'
