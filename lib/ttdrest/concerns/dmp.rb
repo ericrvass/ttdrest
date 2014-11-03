@@ -51,6 +51,14 @@ module Ttdrest
         result = data_post(path, content_type, data_group_data.to_json)
         return result
       end
+
+      def get_third_party_facets
+        advertiser_id = self.advertiser_id || options[:advertiser_id]
+        path = "/dmp/thirdparty/facets/#{advertiser_id}"
+        params = {}
+        result = get(path, params)
+        return result
+      end
       
     end
   end
