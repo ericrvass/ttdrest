@@ -37,6 +37,30 @@ module Ttdrest
         result = data_post(path, content_type, audience_data.to_json)
         return result
       end
+
+      def update_audience(audience_id, included_data_group_ids = [], options = {})
+        advertiser_id = self.advertiser_id || options[:advertiser_id]
+        path = "/audience"
+        content_type = 'application/json'
+        audience_data = {
+          "AdvertiserId" => advertiser_id,
+          "AudienceId" => audience_id,
+          "IncludedDataGroupIds" => included_data_group_ids
+          }
+        params = options[:params] || {}
+        if !params[:name].nil?
+          audience_data = audience_data.merge({"AudienceName" => params[:name]})
+        end
+        if !params[:description].nil?
+          audience_data = audience_data.merge({"Description" => params[:description]})
+        end
+        if !params[:excluded_data_group_ids].nil?
+          audience_data = audience_data.merge({"ExcludedDataGroupIds" => params[:excluded_data_group_ids]})
+        end
+     
+        result = data_put(path, content_type, audience_data.to_json)
+        return result
+      end
       
     end
   end

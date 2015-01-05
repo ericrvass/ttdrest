@@ -39,6 +39,32 @@ module Ttdrest
         result = data_post(path, content_type, data_group_data.to_json)
         return result
       end
+
+      def update_data_group(data_group_id, options = {})
+        advertiser_id = self.advertiser_id || options[:advertiser_id]
+        path = "/datagroup"
+        content_type = 'application/json'
+        data_group_data = {
+          "AdvertiserId" => advertiser_id,
+          "DataGroupId" => data_group_id
+          }
+        params = options[:params] || {}
+        if !params[:name].nil?
+          data_group_data = data_group_data.merge({"DataGroupName" => params[:name]})
+        end
+        if !params[:description].nil?
+          data_group_data = data_group_data.merge({"Description" => params[:description]})
+        end
+        if !params[:first_party_data_ids].nil?
+          data_group_data = data_group_data.merge({"FirstPartyDataIds" => params[:first_party_data_ids]})
+        end
+        if !params[:third_party_data_ids].nil?
+          data_group_data = data_group_data.merge({"ThirdPartyDataIds" => params[:third_party_data_ids]})
+        end
+
+        result = data_put(path, content_type, data_group_data.to_json)
+        return result
+      end
       
     end
   end
