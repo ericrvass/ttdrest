@@ -100,6 +100,12 @@ module Ttdrest
         if !params[:frequency_pricing_slope].nil?
           rtb_ad_group_data = rtb_ad_group_data.merge({"FrequencyPricingSlope" => params[:frequency_pricing_slope]})
         end
+        if !params[:frequency_period_in_minutes].nil?
+          rtb_ad_group_data = rtb_ad_group_data.merge({"FrequencyPeriodInMinutes" => params[:frequency_period_in_minutes]})
+        end
+        if !params[:frequency_cap].nil?
+          rtb_ad_group_data = rtb_ad_group_data.merge({"FrequencyCap" => params[:frequency_cap]})
+        end
         if !params[:site_list_ids].nil?
           rtb_ad_group_data = rtb_ad_group_data.merge({"SiteListIds" => params[:site_list_ids]})
         end
