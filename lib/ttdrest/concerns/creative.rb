@@ -164,8 +164,31 @@ module Ttdrest
         result = data_put(path, content_type, creative_data.to_json)
         return result
       end
-      
-      #TODO: Flash Creatives
+
+      def create_flash_creative(name, flash_content, clickthrough_url, landing_page_url, options = {})
+        advertiser_id = self.advertiser_id || options[:advertiser_id]
+        path = "/creative"
+        content_type = 'application/json'
+        creative_data = {
+          "AdvertiserId" => advertiser_id,
+          "CreativeName" => name
+        }
+        params = options[:params] || {}
+        if !params[:right_media_offer_type_id].nil?
+          creative_data = creative_data.merge({"RightMediaOfferTypeId" => params[:right_media_offer_type_id]})
+        end
+
+        flash_data = {
+          "FlashContent" => flash_content,
+          "ClickthroughUrl" => clickthrough_url,
+          "LandingPageUrl" => landing_page_url,
+          "FlashClickTrackingParameterName" => "clickTAG" # TODO: figure out what to actually use here
+        }
+
+        creative_data = creative_data.merge({"FlashAttributes" => flash_data})
+        result = data_post(path, content_type, creative_data.to_json)
+        return result
+      end
       
       #TODO: 3rd Party HTML Creatives
       
