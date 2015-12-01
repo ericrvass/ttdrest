@@ -191,9 +191,41 @@ module Ttdrest
       end
       
       #TODO: 3rd Party HTML Creatives
-      
-      #TODO: Video Creatives
-      
+
+      def create_video_creative(name, video_content, clickthrough_url, landing_page_url, options = {})
+        advertiser_id = self.advertiser_id || options[:advertiser_id]
+        path = "/creative"
+        content_type = 'application/json'
+        creative_data = {
+          "AdvertiserId" => advertiser_id,
+          "CreativeName" => name
+          }
+        params = options[:params] || {}
+        if !params[:description].nil?
+          creative_data = creative_data.merge({"Description" => params[:description]})
+        end
+        if !params[:third_party_impression_tracking_url].nil?
+          creative_data = creative_data.merge({"ThirdPartyImpressionTrackingUrl" => params[:third_party_impression_tracking_url]})
+        end
+        if !params[:right_media_offer_type_id].nil?
+          creative_data = creative_data.merge({"RightMediaOfferTypeId" => params[:right_media_offer_type_id]})
+        end
+        if !params[:ad_technology_ids].nil?
+          creative_data = creative_data.merge({"AdTechnologyIds" => params[:ad_technology_ids]})
+        end
+
+        video_data = {
+          "VideoContent" => video_content,
+          "ClickthroughUrl" => clickthrough_url,
+          "LandingPageUrl" => landing_page_url
+          }
+
+        creative_data = creative_data.merge({"TradeDeskHostedVideoAttributes" => video_data})
+
+        result = data_post(path, content_type, creative_data.to_json)
+        return result
+      end
+
     end
   end
 end
