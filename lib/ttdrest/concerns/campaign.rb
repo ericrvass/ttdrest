@@ -54,7 +54,7 @@ module Ttdrest
           campaign_data = campaign_data.merge({"BudgetInUSDollars" => budget_in_dollars})
         end
         if !start_date.nil?
-          campaign_data = campaign_data.merge({"StartDate" => start_date})
+          campaign_data = campaign_data.merge({"StartDate" => start_date.strftime("%Y-%m-%dT%H:%M:%SZ")})
         end
         if !params[:description].nil?
           campaign_data = campaign_data.merge({"Description" => params[:description]})
@@ -68,8 +68,11 @@ module Ttdrest
         if !params[:daily_budget_in_impressions].nil?
           campaign_data = campaign_data.merge({"DailyBudgetInImpressions" => params[:daily_budget_in_impressions]})
         end
-        # Nillable https://api.thetradedesk.com/v2/doc/api/put-campaign
-        campaign_data = campaign_data.merge({"EndDate" => params[:end_date]})
+        if !params[:end_date].nil?
+          campaign_data = campaign_data.merge({"EndDate" => params[:end_date].strftime("%Y-%m-%dT%H:%M:%SZ")})
+        else
+          campaign_data = campaign_data.merge({"EndDate" => nil})
+        end
         return campaign_data
       end
       
