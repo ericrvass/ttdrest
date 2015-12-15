@@ -182,7 +182,7 @@ module Ttdrest
           "FlashContent" => flash_content,
           "ClickthroughUrl" => clickthrough_url,
           "LandingPageUrl" => landing_page_url,
-          "FlashClickTrackingParameterName" => "clickTAG" # TODO: figure out what to actually use here
+          "FlashClickTrackingParameterName" => params[:click_tag].nil? ? "clickTAG" : params[:click_tag]
         }
 
         creative_data = creative_data.merge({"FlashAttributes" => flash_data})
