@@ -12,7 +12,7 @@ module Ttdrest
       def authenticate(options = {})
         client_id = self.client_login || options[:client_login]
         client_secret = self.client_password || options[:client_password]
-        result = auth_post(client_login, client_password)
+        result = auth_post(client_id, client_password)
         self.auth_token = result["Token"]     
         return self.auth_token
       end
