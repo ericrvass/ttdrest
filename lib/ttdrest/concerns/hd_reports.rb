@@ -9,12 +9,12 @@ module Ttdrest
         report_data = {
           "AdvertiserId" => advertiser_id,
           "ReportDateUTC" => report_date.strftime("%Y-%m-%d")
-          }
-        
+        }
+
         result = data_post(path, content_type, report_data.to_json)
         return result
       end
-      
+
     end
   end
 end
