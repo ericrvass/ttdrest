@@ -4,9 +4,10 @@ module Ttdrest
 
       def get_ip_targeting_lists(options = {})
         advertiser_id = self.advertiser_id || options[:advertiser_id]
-        path = "/iptargetinglists/#{advertiser_id}"
-        params = {}
-        result = get(path, params)
+        path = "/iptargetinglist/query/advertiser"
+        params = { AdvertiserId: advertiser_id, PageStartIndex: 0, PageSize: nil }
+        content_type = 'application/json'
+        result = data_post(path, content_type, params.to_json)
         return result
       end
       
