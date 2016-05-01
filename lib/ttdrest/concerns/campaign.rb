@@ -77,6 +77,15 @@ module Ttdrest
         if !params[:availability].nil?
           campaign_data = campaign_data.merge({"Availability" => availability})
         end
+        if !params[:partner_cost_percentage_fee].nil?
+          campaign_data = campaign_data.merge({"PartnerCostPercentageFee" => params[:partner_cost_percentage_fee]})
+        end
+        if !params[:partner_cpm_fee].nil?
+          campaign_data = campaign_data.merge({"PartnerCPMFee" => params[:partner_cpm_fee]})
+        end
+        if !params[:partner_cpc_fee].nil?
+          campaign_data = campaign_data.merge({"PartnerCPCFee" => params[:partner_cpc_fee]})
+        end
         return campaign_data
       end
       
