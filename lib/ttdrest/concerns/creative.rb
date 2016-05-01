@@ -44,6 +44,10 @@ module Ttdrest
           image_data = image_data.merge({"AdTechnologyIds" => params[:ad_technology_ids]})
         end
 
+        if !params[:is_securable].nil?
+          image_data = image_data.merge({"IsSecurable" => params[:is_securable]})
+        end
+
         creative_data = creative_data.merge({"ImageAttributes" => image_data})
 
         result = data_post(path, content_type, creative_data.to_json)
@@ -74,6 +78,9 @@ module Ttdrest
         end
         if !params[:ad_technology_ids].nil?
           image_data = image_data.merge({"AdTechnologyIds" => params[:ad_technology_ids]})
+        end
+        if !params[:is_securable].nil?
+          image_data = image_data.merge({"IsSecurable" => params[:is_securable]})
         end
         if !image_content.blank?
           image_data = image_data.merge({"ImageContent" => image_content})
@@ -177,6 +184,9 @@ module Ttdrest
         if !params[:right_media_offer_type_id].nil?
           flash_data = flash_data.merge({"RightMediaOfferTypeId" => params[:right_media_offer_type_id]})
         end
+        if !params[:is_securable].nil?
+          flash_data = flash_data.merge({"IsSecurable" => params[:is_securable]})
+        end
 
         creative_data = creative_data.merge({"FlashAttributes" => flash_data})
         result = data_post(path, content_type, creative_data.to_json)
@@ -209,6 +219,9 @@ module Ttdrest
         end
         if !params[:ad_technology_ids].nil?
           video_data = video_data.merge({"AdTechnologyIds" => params[:ad_technology_ids]})
+        end
+        if !params[:is_securable].nil?
+          video_data = video_data.merge({"IsSecurable" => params[:is_securable]})
         end
 
         creative_data = creative_data.merge({"TradeDeskHostedVideoAttributes" => video_data})
