@@ -20,3 +20,7 @@ tmp
 *.o
 *.a
 mkmf.log
+
+# vim artifacts
+*.swp
+*.swo

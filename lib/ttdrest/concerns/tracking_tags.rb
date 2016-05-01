@@ -4,30 +4,26 @@ module Ttdrest
 
       def get_tracking_tags(options = {})
         advertiser_id = self.advertiser_id || options[:advertiser_id]
-        path = "/trackingtags/#{advertiser_id}"
-        params = {}
-        result = get(path, params)
-        return result
+        path = "/trackingtag/query/advertiser"
+        params = { AdvertiserId: advertiser_id, PageStartIndex: 0, PageSize: nil }
+        content_type = 'application/json'
+        data_post(path, content_type, params.to_json)
       end
 
-      def get_tracking_tag_types()
-        path = "/trackingtagtypes"
-        params = {}
-        result = get(path, params)
-        return result
+      def get_tracking_tag_types
+        get("/trackingtag/query/facets", {})
       end
 
-      def create_tracking_tag(tracking_tag_name, tracking_tag_type_id, options = {})
+      def create_tracking_tag(tracking_tag_name, tag_type, options = {})
         path = "/trackingtag"
         content_type = 'application/json'
         advertiser_id = self.advertiser_id || options[:advertiser_id]
         params = options[:params] || {}
-        tracking_tag_data = build_tracking_tag_data(advertiser_id, nil, tracking_tag_name, tracking_tag_type_id, params)
-        result = data_post(path, content_type, tracking_tag_data.to_json)
-        return result
+        tracking_tag_data = build_tracking_tag_data(advertiser_id, nil, tracking_tag_name, tag_type, params)
+        data_post(path, content_type, tracking_tag_data.to_json)
       end
 
-      def build_tracking_tag_data(advertiser_id, tracking_tag_id, tracking_tag_name, tracking_tag_type_id, params = {})
+      def build_tracking_tag_data(advertiser_id, tracking_tag_id, tracking_tag_name, tag_type, params = {})
         tracking_tag_data = {}
         if !advertiser_id.nil?
           tracking_tag_data = tracking_tag_data.merge({"AdvertiserId" => advertiser_id})
@@ -38,8 +34,8 @@ module Ttdrest
         if !tracking_tag_name.blank?
           tracking_tag_data = tracking_tag_data.merge({"TrackingTagName" => tracking_tag_name})
         end
-        if !tracking_tag_type_id.blank?
-          tracking_tag_data = tracking_tag_data.merge({"TrackingTagTypeId" => tracking_tag_type_id})
+        if !tag_type.blank?
+          tracking_tag_data = tracking_tag_data.merge({"TrackingTagType" => tag_type})
         end
         if !params[:tracking_tag_location].nil?
           tracking_tag_data = tracking_tag_data.merge({"TrackingTagLocation" => params[:tracking_tag_location]})
@@ -52,9 +48,6 @@ module Ttdrest
         end
         if !params[:container_tag_body].nil?
           tracking_tag_data = tracking_tag_data.merge({"ContainerTagBody" => params[:container_tag_body]})
-        end
-        if !params[:right_media_recency_window_in_minutes].nil?
-          tracking_tag_data = tracking_tag_data.merge({"RightMediaRecencyWindowInMinutes" => params[:right_media_recency_window_in_minutes]})
         end
         return tracking_tag_data
       end

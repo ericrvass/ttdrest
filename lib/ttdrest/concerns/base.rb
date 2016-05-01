@@ -6,7 +6,7 @@ module Ttdrest
       
       #TODO: PUT Updates
       
-      VERSION = "v2"
+      VERSION = "v3"
       RETRIES = 2
       
       def authenticate(options = {})

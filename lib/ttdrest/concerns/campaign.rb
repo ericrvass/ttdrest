@@ -4,9 +4,10 @@ module Ttdrest
 
       def get_campaigns(options = {})
         advertiser_id = self.advertiser_id || options[:advertiser_id]
-        path = "/campaigns/#{advertiser_id}"
-        params = {}
-        result = get(path, params)
+        path = "/campaign/query/advertiser"
+        params = { AdvertiserId: advertiser_id, PageStartIndex: 0, PageSize: nil }
+        content_type = 'application/json'
+        result = data_post(path, content_type, params.to_json)
         return result
       end
       
@@ -17,29 +18,29 @@ module Ttdrest
         return result
       end
       
-      def update_campaign(campaign_id, name, budget_in_dollars, start_date, campaign_conversion_reporting_columns = [], options = {})
+      def update_campaign(campaign_id, name, budget, start_date, campaign_conversion_reporting_columns = [], options = {})
         path = "/campaign"
         content_type = 'application/json'
         params = options[:params] || {}
         
         # Build campaign data hash
-        campaign_data = build_campaign_data(campaign_id, name, budget_in_dollars, start_date, campaign_conversion_reporting_columns, params)
+        campaign_data = build_campaign_data(campaign_id, name, budget, start_date, campaign_conversion_reporting_columns, params)
 
         result = data_put(path, content_type, campaign_data.to_json)
         return result
       end
       
-      def create_campaign(name, budget_in_dollars, start_date, campaign_conversion_reporting_columns = [], options = {})
+      def create_campaign(name, budget, start_date, campaign_conversion_reporting_columns = [], options = {})
         advertiser_id = self.advertiser_id || options[:advertiser_id]
         path = "/campaign"
         content_type = 'application/json'
         params = options[:params] || {}
-        campaign_data = build_campaign_data(nil, name, budget_in_dollars, start_date, campaign_conversion_reporting_columns, params)
+        campaign_data = build_campaign_data(nil, name, budget, start_date, campaign_conversion_reporting_columns, params)
         result = data_post(path, content_type, campaign_data.to_json)
         return result
       end
       
-      def build_campaign_data(campaign_id, name, budget_in_dollars, start_date, campaign_conversion_reporting_columns = [], params = {})
+      def build_campaign_data(campaign_id, name, budget, start_date, campaign_conversion_reporting_columns = [], params = {})
         campaign_data = {
           "AdvertiserId" => advertiser_id,
           "CampaignConversionReportingColumns" => campaign_conversion_reporting_columns
@@ -50,8 +51,8 @@ module Ttdrest
         if !name.blank?
           campaign_data = campaign_data.merge({"CampaignName" => name})
         end
-        if !budget_in_dollars.nil?
-          campaign_data = campaign_data.merge({"BudgetInUSDollars" => budget_in_dollars})
+        if !budget.nil?
+          campaign_data = campaign_data.merge({"Budget" => budget})
         end
         if !start_date.nil?
           campaign_data = campaign_data.merge({"StartDate" => start_date.strftime("%Y-%m-%dT%H:%M:%SZ")})
@@ -62,8 +63,8 @@ module Ttdrest
         if !params[:budget_in_impressions].nil?
           campaign_data = campaign_data.merge({"BudgetInImpressions" => params[:budget_in_impressions]})
         end
-        if !params[:daily_budget_in_dollars].nil?
-          campaign_data = campaign_data.merge({"DailyBudgetInUSDollars" => params[:daily_budget_in_dollars]})
+        if !params[:daily_budget].nil?
+          campaign_data = campaign_data.merge({"DailyBudget" => params[:daily_budget]})
         end
         if !params[:daily_budget_in_impressions].nil?
           campaign_data = campaign_data.merge({"DailyBudgetInImpressions" => params[:daily_budget_in_impressions]})
@@ -72,6 +73,9 @@ module Ttdrest
           campaign_data = campaign_data.merge({"EndDate" => params[:end_date].strftime("%Y-%m-%dT%H:%M:%SZ")})
         else
           campaign_data = campaign_data.merge({"EndDate" => nil})
+        end
+        if !params[:availability].nil?
+          campaign_data = campaign_data.merge({"Availability" => availability})
         end
         return campaign_data
       end

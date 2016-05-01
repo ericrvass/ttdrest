@@ -3,9 +3,10 @@ module Ttdrest
     module Advertiser
 
       def get_advertisers(partner_id, options = {})
-        path = "/advertisers/#{partner_id}"
-        params = {}
-        result = get(path, params)
+        path = "/advertiser/query/partner"
+        params = { PartnerId: partner_id, PageStartIndex: 0, PageSize: nil }
+        content_type = 'application/json'
+        result = data_post(path, content_type, params.to_json)
         return result
       end
       
@@ -51,8 +52,8 @@ module Ttdrest
         if !params[:description].nil?
           advertiser_data = advertiser_data.merge({"Description" => params[:description]})
         end
-        if !params[:currency_code_id].nil?
-          advertiser_data = advertiser_data.merge({"CurrencyCodeId" => params[:currency_code_id]})
+        if !params[:currency_code].nil?
+          advertiser_data = advertiser_data.merge({"CurrencyCode" => params[:currency_code]})
         end
         if !params[:attribution_click_lookback_window_in_seconds].nil?
           advertiser_data = advertiser_data.merge({"AttributionClickLookbackWindowInSeconds" => params[:attribution_click_lookback_window_in_seconds]})
@@ -66,11 +67,8 @@ module Ttdrest
         if !params[:conversion_dedup_window_in_seconds].nil?
           advertiser_data = advertiser_data.merge({"ConversionDedupWindowInSeconds" => params[:conversion_dedup_window_in_seconds]})
         end
-        if !params[:right_media_hosting_enabled].nil?
-          advertiser_data = advertiser_data.merge({"RightMediaHostedEnabled" => params[:right_media_hosting_enabled]})
-        end
-        if !params[:right_media_default_offer_type_id].nil?
-          advertiser_data = advertiser_data.merge({"RightMediaDefaultOfferTypeId" => params[:right_media_default_offer_type_id]})
+        if !params[:default_right_media_offer_type_id].nil?
+          advertiser_data = advertiser_data.merge({"DefaultRightMediaOfferTypeId" => params[:default_right_media_offer_type_id]})
         end
         if !params[:facebook_attributes].nil?
           advertiser_data = advertiser_data.merge({"FacebookAttributes" => params[:facebook_attributes]})
