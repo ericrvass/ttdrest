@@ -10,14 +10,14 @@ module Ttdrest
         result = data_post(path, content_type, params.to_json)
         return result
       end
-      
+
       def get_ip_targeting_list(ip_targeting_list_id, options = {})
         path = "/iptargetinglist/#{ip_targeting_list_id}"
         params = {}
         result = get(path, params)
         return result
       end
-      
+
       # ip_targeting_range_format [{:min_ip => '100.0.0.1', :max_ip => '100.0.0.2'}, {:min_ip => '100.0.0.3', :max_ip => '100.0.0.4'}]
       def create_ip_targeting_list(name, ip_targeting_ranges = [], options = {})
         advertiser_id = self.advertiser_id || options[:advertiser_id]
@@ -32,11 +32,11 @@ module Ttdrest
           "IPTargetingDataName" => name,
           "IPTargetingRanges" => ip_list_data
           }
-     
+
         result = data_post(path, content_type, ip_targeting_data.to_json)
         return result
       end
-      
+
     end
   end
 end
