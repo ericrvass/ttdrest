@@ -24,7 +24,7 @@ module Ttdrest
     include Ttdrest::Concerns::HdReports
     include Ttdrest::Concerns::IpTargetingList
     include Ttdrest::Concerns::TrackingTags
-    
+
     # The Auth client login
     attr_accessor :client_login
     # The Auth client password
@@ -35,7 +35,7 @@ module Ttdrest
     attr_accessor :host
     # The Advertiser ID
     attr_accessor :advertiser_id
-    
+
     def initialize(options = {})
       if options.is_a?(String)
         @options = YAML.load_file(options)
@@ -43,12 +43,12 @@ module Ttdrest
         @options = options
       end
       @options.symbolize_keys!
-      
+
       self.client_login = ENV['TTD_CLIENT_LOGIN'] || @options[:client_login]
       self.client_password = ENV['TTD_CLIENT_PASSWORD'] || @options[:client_password]
       self.host = ENV['TTD_HOST'] || @options[:host]
       self.advertiser_id = ENV['TTD_ADVERTISER_ID'] || @options[:advertiser_id]
     end
-    
+
   end
 end

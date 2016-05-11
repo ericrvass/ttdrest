@@ -10,26 +10,26 @@ module Ttdrest
         result = data_post(path, content_type, params.to_json)
         return result
       end
-      
+
       def get_campaign(campaign_id, options = {})
         path = "/campaign/#{campaign_id}"
         params = {}
         result = get(path, params)
         return result
       end
-      
+
       def update_campaign(campaign_id, name, budget, start_date, campaign_conversion_reporting_columns = [], options = {})
         path = "/campaign"
         content_type = 'application/json'
         params = options[:params] || {}
-        
+
         # Build campaign data hash
         campaign_data = build_campaign_data(campaign_id, name, budget, start_date, campaign_conversion_reporting_columns, params)
 
         result = data_put(path, content_type, campaign_data.to_json)
         return result
       end
-      
+
       def create_campaign(name, budget, start_date, campaign_conversion_reporting_columns = [], options = {})
         advertiser_id = self.advertiser_id || options[:advertiser_id]
         path = "/campaign"
@@ -39,7 +39,7 @@ module Ttdrest
         result = data_post(path, content_type, campaign_data.to_json)
         return result
       end
-      
+
       def build_campaign_data(campaign_id, name, budget, start_date, campaign_conversion_reporting_columns = [], params = {})
         campaign_data = {
           "AdvertiserId" => advertiser_id,
@@ -88,7 +88,7 @@ module Ttdrest
         end
         return campaign_data
       end
-      
+
     end
   end
 end
