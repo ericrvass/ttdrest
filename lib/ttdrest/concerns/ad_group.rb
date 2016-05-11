@@ -8,7 +8,7 @@ module Ttdrest
         content_type = 'application/json'
         data_post(path, content_type, params.to_json)
       end
-      
+
       def get_ad_group(ad_group_id, options = {})
         get("/adgroup/#{ad_group_id}", {})
       end
@@ -17,26 +17,26 @@ module Ttdrest
         path = "/adgroup"
         content_type = 'application/json'
         params = options[:params] || {}
-        
+
         # Build main ad group data hash
         ad_group_data = build_ad_group_data(nil, campaign_id, name, budget_settings, base_bid_cpm, max_bid_cpm, creative_ids, params)
-        
+
         result = data_post(path, content_type, ad_group_data.to_json)
         return result
       end
-      
+
       def update_ad_group(ad_group_id, campaign_id, name, budget_settings, base_bid_cpm, max_bid_cpm, creative_ids = [], options = {})
         path = "/adgroup"
         content_type = 'application/json'
         params = options[:params] || {}
-        
+
         # Build main ad group data hash
         ad_group_data = build_ad_group_data(ad_group_id, campaign_id, name, budget_settings, base_bid_cpm, max_bid_cpm, creative_ids, params)
-        
+
         result = data_put(path, content_type, ad_group_data.to_json)
         return result
       end
-      
+
       def build_ad_group_data(ad_group_id, campaign_id, name, budget_settings, base_bid_cpm, max_bid_cpm, creative_ids = [], params = {})
         # Build main ad group data hash
         ad_group_data = {}
@@ -100,21 +100,21 @@ module Ttdrest
         if !params[:geo_segment_adjustments].nil?
           rtb_ad_group_data = rtb_ad_group_data.merge({"GeoSegmentAdjustments" => params[:geo_segment_adjustments]})
         end
-        #TODO: AdFormatAdjustments 
-        #TODO: UserHourOfWeekAdjustments 
-        #TODO: SupplyVendorAdjustments 
-        #TODO: BrowserAdjustments 
-        #TODO: OSAdjustments 
-        #TODO: OSFamilyAdjustments 
-        #TODO: DeviceTypeAdjustments 
+        #TODO: AdFormatAdjustments
+        #TODO: UserHourOfWeekAdjustments
+        #TODO: SupplyVendorAdjustments
+        #TODO: BrowserAdjustments
+        #TODO: OSAdjustments
+        #TODO: OSFamilyAdjustments
+        #TODO: DeviceTypeAdjustments
 
         if !rtb_ad_group_data.empty?
           ad_group_data = ad_group_data.merge({"RTBAttributes" => rtb_ad_group_data})
         end
-        
+
         return ad_group_data
       end
-      
+
     end
   end
 end

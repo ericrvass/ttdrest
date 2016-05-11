@@ -1,24 +1,24 @@
 module Ttdrest
   class AuthorizationFailedError < StandardError; end
-  
+
   module Concerns
     module Base
-      
+
       #TODO: PUT Updates
-      
+
       VERSION = "v3"
       RETRIES = 2
-      
+
       def authenticate(options = {})
         client_id = self.client_login || options[:client_login]
         client_secret = self.client_password || options[:client_password]
         result = auth_post(client_id, client_secret)
-        self.auth_token = result["Token"]     
+        self.auth_token = result["Token"]
         return self.auth_token
       end
 
       def check_response(response)
-        if response.code.eql?("403") 
+        if response.code.eql?("403")
           raise AuthorizationFailedError
         end
       end
@@ -38,9 +38,9 @@ module Ttdrest
             self.auth_token = authenticate
             retry
           end
-        rescue Exception => e 
-          puts 'Error In GET: ' + e.message 
-        end 
+        rescue Exception => e
+          puts 'Error In GET: ' + e.message
+        end
       end
 
       def data_post(path, content_type, json_data)
@@ -59,11 +59,11 @@ module Ttdrest
             self.auth_token = authenticate
             retry
           end
-        rescue Exception => e 
-          puts 'Error In Data POST: ' + e.message 
-        end 
+        rescue Exception => e
+          puts 'Error In Data POST: ' + e.message
+        end
       end
-    
+
       def data_put(path, content_type, json_data)
         tries = RETRIES
         begin
@@ -80,9 +80,9 @@ module Ttdrest
             self.auth_token = authenticate
             retry
           end
-        rescue Exception => e 
-          puts 'Error In Data POST: ' + e.message 
-        end 
+        rescue Exception => e
+          puts 'Error In Data POST: ' + e.message
+        end
       end
 
       def auth_post(client_login, client_password)
@@ -94,9 +94,9 @@ module Ttdrest
           response = http_connection.request(request)
           result = JSON.parse(response.body)
           return result
-        rescue Exception => e 
-          puts 'Error Authenticating: ' + e.message 
-        end 
+        rescue Exception => e
+          puts 'Error Authenticating: ' + e.message
+        end
       end
 
       def http_connection(options = {})

@@ -9,14 +9,14 @@ module Ttdrest
         result = get(path, params)
         return result
       end
-      
+
       def get_audience(audience_id, options = {})
         path = "/audience/#{audience_id}"
         params = {}
         result = get(path, params)
         return result
       end
-      
+
       def create_audience(name, included_data_group_ids = [], options = {})
         advertiser_id = self.advertiser_id || options[:advertiser_id]
         path = "/audience"
@@ -33,7 +33,7 @@ module Ttdrest
         if !params[:excluded_data_group_ids].nil?
           audience_data = audience_data.merge({"ExcludedDataGroupIds" => params[:excluded_data_group_ids]})
         end
-     
+
         result = data_post(path, content_type, audience_data.to_json)
         return result
       end
@@ -57,11 +57,11 @@ module Ttdrest
         if !params[:excluded_data_group_ids].nil?
           audience_data = audience_data.merge({"ExcludedDataGroupIds" => params[:excluded_data_group_ids]})
         end
-     
+
         result = data_put(path, content_type, audience_data.to_json)
         return result
       end
-      
+
     end
   end
 end
