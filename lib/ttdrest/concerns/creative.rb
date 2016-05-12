@@ -5,6 +5,7 @@ module Ttdrest
     module Creative
       include Ttdrest::Concerns::CreativeTypes::Facebook
       include Ttdrest::Concerns::CreativeTypes::Flash
+      include Ttdrest::Concerns::CreativeTypes::Html
       include Ttdrest::Concerns::CreativeTypes::Image
       include Ttdrest::Concerns::CreativeTypes::Video
 
