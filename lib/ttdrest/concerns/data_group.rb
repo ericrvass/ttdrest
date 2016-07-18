@@ -10,14 +10,14 @@ module Ttdrest
         result = data_post(path, content_type, params.to_json)
         return result
       end
-      
+
       def get_data_group(data_group_id, options = {})
         path = "/datagroup/#{data_group_id}"
         params = {}
         result = get(path, params)
         return result
       end
-      
+
       def create_data_group(name, options = {})
         advertiser_id = self.advertiser_id || options[:advertiser_id]
         path = "/datagroup"
@@ -66,7 +66,7 @@ module Ttdrest
         result = data_put(path, content_type, data_group_data.to_json)
         return result
       end
-      
+
     end
   end
 end

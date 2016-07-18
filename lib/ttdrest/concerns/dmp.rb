@@ -59,7 +59,7 @@ module Ttdrest
         result = get(path, params)
         return result
       end
-      
+
     end
   end
 end
