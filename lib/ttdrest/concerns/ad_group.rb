@@ -82,6 +82,15 @@ module Ttdrest
         if !params[:fold_targeting].nil?
           rtb_ad_group_data = rtb_ad_group_data.merge({"FoldTargeting" => params[:fold_targeting]})
         end
+        if !params[:supply_vendors].nil?
+          rtb_ad_group_data = rtb_ad_group_data.merge({"SupplyVendorAdjustments" => params[:supply_vendors]})
+        end
+        if !params[:contract_targeting].nil?
+          rtb_ad_group_data = rtb_ad_group_data.merge({"ContractTargeting" => params[:contract_targeting]})
+        end
+        if !params[:site_quality_settings].nil?
+          rtb_ad_group_data = rtb_ad_group_data.merge({"SiteQualitySettings" => params[:site_quality_settings]})
+        end
         if !params[:audience_id].nil?
           # Build audience data hash
           audience_data = { "AudienceId" => params[:audience_id] }
