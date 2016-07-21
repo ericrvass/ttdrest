@@ -1,5 +1,8 @@
-Dir["lib/ttdrest/concerns/creative_types/*.rb"].each { |f| require f.gsub('lib/', '') }
-
+require "ttdrest/concerns/creative_types/facebook.rb"
+require "ttdrest/concerns/creative_types/flash.rb"
+require "ttdrest/concerns/creative_types/html.rb"
+require "ttdrest/concerns/creative_types/image.rb"
+require "ttdrest/concerns/creative_types/video.rb"
 module Ttdrest
   module Concerns
     module Creative
