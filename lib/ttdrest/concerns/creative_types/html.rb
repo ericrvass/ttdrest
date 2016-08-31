@@ -80,8 +80,8 @@ module Ttdrest
             "ZipArchiveContent" => html_zip_content,
             "ClickthroughUrl" => clickthrough_url,
             "LandingPageUrls" => [landing_page_url],
-            "width" => width,
-            "height" => height,
+            "Width" => width,
+            "Height" => height,
             "ClickTrackingParameterName" => click_tracking_parameter_name
           }
 
