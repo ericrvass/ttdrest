@@ -82,7 +82,8 @@ module Ttdrest
             "LandingPageUrls" => [landing_page_url],
             "width" => width,
             "height" => height,
-            "ClickTrackingParameterName" => click_tracking_parameter_name
+            "ClickTrackingParameterName" => click_tracking_parameter_name,
+            "IsSecurable" => true
           }
 
           if !params[:right_media_offer_type_id].nil?
