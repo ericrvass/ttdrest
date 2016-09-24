@@ -2,7 +2,7 @@ module Ttdrest
   module Concerns
     module MyReports
 
-      def get_reports(report_date, options = {})
+      def get_my_reports(report_date, options = {})
         advertiser_id = self.advertiser_id || options[:advertiser_id]
         path = "/myreports/reportexecution/query/advertisers"
         content_type = 'application/json'
