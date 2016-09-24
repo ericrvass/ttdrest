@@ -10,7 +10,7 @@ module Ttdrest
           "AdvertiserIds" => [advertiser_id],
           "ExecutionSpansStartDate" => report_date.strftime("%Y-%m-%dT00:00:00.0000000+00:00"),
           "ExecutionSpansEndDate" => (report_date + 1.day).strftime("%Y-%m-%dT00:00:00.0000000+00:00"),
-          "PageStartIndex" => 1,
+          "PageStartIndex" => 0,
           "PageSize" => 1,
           "ExecutionStates" => options[:execution_states].present? ? options[:execution_states] : ["Complete"]
         }
