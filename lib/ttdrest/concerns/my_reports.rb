@@ -14,7 +14,9 @@ module Ttdrest
           "PageSize" => 1,
           "ExecutionStates" => options[:execution_states].present? ? options[:execution_states] : ["Complete"]
         }
-
+        if options[:sort_fields].present?
+          report_data["SortFields"] = options[:sort_fields]
+        end
         result = data_post(path, content_type, report_data.to_json)
         return result
       end
