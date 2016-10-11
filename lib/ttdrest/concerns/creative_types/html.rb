@@ -83,7 +83,8 @@ module Ttdrest
             "width" => width,
             "height" => height,
             "ClickTrackingParameterName" => click_tracking_parameter_name,
-            "IsSecurable" => true
+            "IsSecurable" => true,
+            "UseClickthroughAsDefault" => true
           }
 
           if !params[:right_media_offer_type_id].nil?
