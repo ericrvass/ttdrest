@@ -27,7 +27,13 @@ module Ttdrest
         return result
       end
 
-      #TODO: 3rd Party HTML Creatives
+      def update_creative(creative_data:)
+        data_put(
+          path = "/creative",
+          content_type = 'application/json',
+          creative_data
+        )
+      end
 
     end
   end
