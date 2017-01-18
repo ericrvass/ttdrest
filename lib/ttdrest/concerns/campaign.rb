@@ -31,7 +31,6 @@ module Ttdrest
       end
 
       def create_campaign(name, budget, start_date, campaign_conversion_reporting_columns = [], options = {})
-        advertiser_id = self.advertiser_id || options[:advertiser_id]
         path = "/campaign"
         content_type = 'application/json'
         params = options[:params] || {}
@@ -44,10 +43,13 @@ module Ttdrest
         campaign_data = {
           "AdvertiserId" => advertiser_id,
           "CampaignConversionReportingColumns" => campaign_conversion_reporting_columns
-          }
+        }
+
         if !campaign_id.nil?
           campaign_data = campaign_data.merge({"CampaignId" => campaign_id})
+          campaign_data.delete("CampaignConversionReportingColumns") if campaign_conversion_reporting_columns.empty?
         end
+
         if !name.blank?
           campaign_data = campaign_data.merge({"CampaignName" => name})
         end
