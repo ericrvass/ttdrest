@@ -44,31 +44,31 @@ module Ttdrest
           path = "/creative"
           content_type = 'application/json'
           creative_data = {
-           "CreativeId" => creative_id,
-           "AdvertiserId" => advertiser_id,
-           "CreativeName" => name
+            "CreativeId" => creative_id,
+            "AdvertiserId" => advertiser_id,
+            "CreativeName" => name
           }
           params = options[:params] || {}
           if !params[:description].nil?
-           creative_data = creative_data.merge({"Description" => params[:description]})
+            creative_data = creative_data.merge({"Description" => params[:description]})
           end
 
           image_data = {
-           "ClickthroughUrl" => clickthrough_url,
-           "LandingPageUrl" => landing_page_url
+            "ClickthroughUrl" => clickthrough_url,
+            "LandingPageUrl" => landing_page_url
           }
 
           if !params[:right_media_offer_type_id].nil?
-           image_data = image_data.merge({"RightMediaOfferTypeId" => params[:right_media_offer_type_id]})
+            image_data = image_data.merge({"RightMediaOfferTypeId" => params[:right_media_offer_type_id]})
           end
           if !params[:ad_technology_ids].nil?
-           image_data = image_data.merge({"AdTechnologyIds" => params[:ad_technology_ids]})
+            image_data = image_data.merge({"AdTechnologyIds" => params[:ad_technology_ids]})
           end
           if !params[:is_securable].nil?
-           image_data = image_data.merge({"IsSecurable" => params[:is_securable]})
+            image_data = image_data.merge({"IsSecurable" => params[:is_securable]})
           end
           if !image_content.blank?
-           image_data = image_data.merge({"ImageContent" => image_content})
+            image_data = image_data.merge({"ImageContent" => image_content})
           end
 
           creative_data = creative_data.merge({"ImageAttributes" => image_data})
