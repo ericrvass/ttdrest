@@ -28,6 +28,7 @@ module Ttdrest
       end
 
       def update_creative(creative_data:)
+        binding.pry
         data_put(
           path = "/creative",
           content_type = 'application/json',
