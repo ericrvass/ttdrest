@@ -103,6 +103,7 @@ module Ttdrest
         uri = URI.parse("https://#{self.host || options[:host]}")
         connection = Net::HTTP.new(uri.host, uri.port)
         connection.use_ssl = true
+        connection.read_timeout = 500
         connection.verify_mode = OpenSSL::SSL::VERIFY_NONE
         return connection
       end
