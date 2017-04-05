@@ -32,7 +32,18 @@ module Ttdrest
     # The Auth client password
     attr_accessor :client_password
     # The Auth access token
-    attr_accessor :auth_token
+    attr_accessor :auth_updated_callbacks
+    attr_reader :auth_token
+
+    def auth_token=(new_token)
+      self.auth_updated_callbacks.call(new_token) if self.auth_updated_callbacks
+      @auth_token = new_token
+    end
+
+    def on_auth_update(&blk)
+      self.auth_updated_callbacks = blk
+    end
+
     # The Host
     attr_accessor :host
     # The Advertiser ID
@@ -50,7 +61,7 @@ module Ttdrest
       self.client_password = ENV['TTD_CLIENT_PASSWORD'] || @options[:client_password]
       self.host = ENV['TTD_HOST'] || @options[:host]
       self.advertiser_id = ENV['TTD_ADVERTISER_ID'] || @options[:advertiser_id]
+      @auth_token = @options[:auth_token]
     end
-
   end
 end

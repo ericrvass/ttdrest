@@ -38,7 +38,7 @@ module Ttdrest
             self.auth_token = authenticate
             retry
           end
-        rescue Exception => e
+        rescue => e
           puts 'Error In GET: ' + e.message
         end
       end
@@ -59,7 +59,7 @@ module Ttdrest
             self.auth_token = authenticate
             retry
           end
-        rescue Exception => e
+        rescue => e
           puts 'Error In Data POST: ' + e.message
         end
       end
@@ -80,21 +80,26 @@ module Ttdrest
             self.auth_token = authenticate
             retry
           end
-        rescue Exception => e
+        rescue => e
           puts 'Error In Data POST: ' + e.message
         end
       end
 
-      def auth_post(client_login, client_password)
+      # Defaulting to a 1 hour timeout
+      def auth_post(client_login, client_password, expiration_minutes = 60 * 24 * 30)
         begin
           path = "/#{VERSION}/authentication"
           request = Net::HTTP::Post.new(path, initheader = {'Content-Type' =>'application/json'})
-          auth_data = {"Login" => client_login, "Password" => client_password}.to_json
+          auth_data = {
+            "Login" => client_login,
+            "Password" => client_password,
+            "TokenExpirationInMinutes" => expiration_minutes
+          }.delete_if{|_,v| v.nil? }.to_json
           request.body = auth_data
           response = http_connection.request(request)
           result = JSON.parse(response.body)
           return result
-        rescue Exception => e
+        rescue => e
           puts 'Error Authenticating: ' + e.message
         end
       end
