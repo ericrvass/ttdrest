@@ -12,7 +12,7 @@ module Ttdrest
       def get_ad_group(ad_group_id, options = {})
         get("/adgroup/#{ad_group_id}", {})
       end
-      
+
       def create_ad_group(campaign_id, name, budget_settings, base_bid_cpm, max_bid_cpm, creative_ids = [], options = {})
         path = "/adgroup"
         content_type = 'application/json'
@@ -108,6 +108,9 @@ module Ttdrest
         end
         if !params[:geo_segment_adjustments].nil?
           rtb_ad_group_data = rtb_ad_group_data.merge({"GeoSegmentAdjustments" => params[:geo_segment_adjustments]})
+        end
+        if !params[:data_element_adjustments].nil?
+          rtb_ad_group_data = rtb_ad_group_data.merge({"DataElementAdjustments" => params[:data_element_adjustments]})
         end
         #TODO: AdFormatAdjustments
         #TODO: UserHourOfWeekAdjustments
