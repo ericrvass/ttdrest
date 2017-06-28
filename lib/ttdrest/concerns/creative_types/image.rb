@@ -21,16 +21,20 @@ module Ttdrest
             "LandingPageUrl" => landing_page_url
           }
 
-          if !params[:right_media_offer_type_id].nil?
+          if params[:right_media_offer_type_id].present?
             image_data = image_data.merge({"RightMediaOfferTypeId" => params[:right_media_offer_type_id]})
           end
 
-          if !params[:ad_technology_ids].nil?
+          if params[:ad_technology_ids].present?
             image_data = image_data.merge({"AdTechnologyIds" => params[:ad_technology_ids]})
           end
 
-          if !params[:is_securable].nil?
+          if params[:is_securable].present?
             image_data = image_data.merge({"IsSecurable" => params[:is_securable]})
+          end
+
+          if params[:third_party_tracking_tags].present?
+            image_data = image_data.merge({"ThirdPartyTrackingTags" => [ params[:third_party_tracking_tags] ] })
           end
 
           creative_data = creative_data.merge({"ImageAttributes" => image_data})
