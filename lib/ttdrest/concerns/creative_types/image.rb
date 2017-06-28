@@ -34,7 +34,9 @@ module Ttdrest
           end
 
           if params[:third_party_tracking_tags].present?
-            image_data = image_data.merge({"ThirdPartyTrackingTags" => [ params[:third_party_tracking_tags] ] })
+            image_data = image_data.merge({
+              ThirdPartyTrackingTags: [ params[:third_party_tracking_tags] ] 
+            })
           end
 
           creative_data = creative_data.merge({"ImageAttributes" => image_data})

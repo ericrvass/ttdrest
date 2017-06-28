@@ -30,11 +30,16 @@ module Ttdrest
           if params[:is_securable].present?
             video_data = video_data.merge({"IsSecurable" => params[:is_securable]})
           end
-          if params[:third_party_tracking_tags].present?
-            video_data = video_data.merge({"ThirdPartyTrackingTags" => [ params[:third_party_tracking_tags] ] })
-          end
 
           creative_data = creative_data.merge({"TradeDeskHostedVideoAttributes" => video_data})
+
+          if params[:third_party_tracking_tags].present?
+            creative_data = creative_data.merge({
+              ImageAttributes: {
+                ThirdPartyTrackingTags: [ params[:third_party_tracking_tags] ]
+              }
+            })
+          end
 
           result = data_post(path, content_type, creative_data.to_json)
           return result
