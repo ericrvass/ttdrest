@@ -27,11 +27,6 @@ module Ttdrest
           end
 
           if !params[:third_party_tracking_tags].nil?
-            creative_data = creative_data.merge({
-              ImageAttributes: {
-                ThirdPartyTrackingTags: [ params[:third_party_tracking_tags] ]
-              }
-            })
             flash_data = flash_data.merge({
               ThirdPartyTrackingTags: [ params[:third_party_tracking_tags] ]
             })

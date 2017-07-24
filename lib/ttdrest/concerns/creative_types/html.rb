@@ -91,15 +91,9 @@ module Ttdrest
             details = details.merge({"RightMediaOfferTypeId" => params[:right_media_offer_type_id]})
           end
 
-
           if !params[:third_party_tracking_tags].nil?
-            creative_data = creative_data.merge({
-              ImageAttributes: {
-                ThirdPartyTrackingTags: [ params[:third_party_tracking_tags] ]
-              }
-            })
             details = details.merge({
-              ThirdPartyTrackingTags: [ params[:third_party_tracking_tags] ]
+              "ThirdPartyTrackingTags" => [ params[:third_party_tracking_tags] ]
             })
           end
 
