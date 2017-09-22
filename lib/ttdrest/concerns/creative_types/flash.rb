@@ -26,6 +26,12 @@ module Ttdrest
             flash_data = flash_data.merge({"IsSecurable" => params[:is_securable]})
           end
 
+          if !params[:third_party_tracking_tags].nil?
+            flash_data = flash_data.merge({
+              ThirdPartyTrackingTags: [ params[:third_party_tracking_tags] ]
+            })
+          end
+
           creative_data = creative_data.merge({"FlashAttributes" => flash_data})
           result = data_post(path, content_type, creative_data.to_json)
           return result

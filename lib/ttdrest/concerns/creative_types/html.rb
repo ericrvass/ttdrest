@@ -91,6 +91,12 @@ module Ttdrest
             details = details.merge({"RightMediaOfferTypeId" => params[:right_media_offer_type_id]})
           end
 
+          if !params[:third_party_tracking_tags].nil?
+            details = details.merge({
+              "ThirdPartyTrackingTags" => [ params[:third_party_tracking_tags] ]
+            })
+          end
+
           creative_data = creative_data.merge({"Html5Attributes" => details})
 
           data_post(path, content_type, creative_data.to_json)
