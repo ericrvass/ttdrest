@@ -13,10 +13,13 @@ describe Ttdrest::Client do
       describe "campaign_flights" do
         it "set CampaignFlights" do
           dtiac = [ {
-            'StartDateInclusiveUTC' => ad_campaign.start_at,
+            'CampaignId' => 1,
+            'CampaignFlightId' => 1,
+            'StartDateInclusiveUTC' => start_date,
+            'EndDateExclusiveUTC' => 1.month.from_now,
             'BudgetInAdvertiserCurrency' => 'USD',
-            'DailyTargetInAdvertiserCurrency' => ad_campaign.ad_group.daily_budget
-          ]
+            'DailyTargetInAdvertiserCurrency' => budget
+          }]
           expect(
             client.build_campaign_data(campaign_id, name, budget, start_date, [], { campaign_flights: dtiac })
           ).to include({ "CampaignFlights" => dtiac })
