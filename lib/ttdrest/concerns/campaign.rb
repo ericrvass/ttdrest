@@ -53,38 +53,56 @@ module Ttdrest
         if !name.blank?
           campaign_data = campaign_data.merge({"CampaignName" => name})
         end
+
         if !budget.nil?
           campaign_data = campaign_data.merge({"Budget" => budget})
         end
+
         if !start_date.nil?
           campaign_data = campaign_data.merge({"StartDate" => start_date.strftime("%Y-%m-%dT%H:%M:%SZ")})
         end
+
         if !params[:description].nil?
           campaign_data = campaign_data.merge({"Description" => params[:description]})
         end
+
         if !params[:budget_in_impressions].nil?
           campaign_data = campaign_data.merge({"BudgetInImpressions" => params[:budget_in_impressions]})
         end
+
         if !params[:daily_budget].nil?
           campaign_data = campaign_data.merge({"DailyBudget" => params[:daily_budget]})
         end
+
         if !params[:daily_budget_in_impressions].nil?
           campaign_data = campaign_data.merge({"DailyBudgetInImpressions" => params[:daily_budget_in_impressions]})
         end
-        if !params[:end_date].nil?
+
+        if params[:campaign_flights].present?
+          campaign_data = campaign_data.merge({"CampaignFlights" => params[:campaign_flights]})
+        end
+
+        # Accepts a date
+        # nil
+        # or, if we're not sending the key, nothing (no update)
+        if params.key?(:end_date) && !params[:end_date].nil?
           campaign_data = campaign_data.merge({"EndDate" => params[:end_date].strftime("%Y-%m-%dT%H:%M:%SZ")})
-        else
+        elsif params.key?(:end_date)
           campaign_data = campaign_data.merge({"EndDate" => nil})
         end
+
         if !params[:availability].nil?
           campaign_data = campaign_data.merge({"Availability" => availability})
         end
+
         if !params[:partner_cost_percentage_fee].nil?
           campaign_data = campaign_data.merge({"PartnerCostPercentageFee" => params[:partner_cost_percentage_fee]})
         end
+
         if !params[:partner_cpm_fee].nil?
           campaign_data = campaign_data.merge({"PartnerCPMFee" => params[:partner_cpm_fee]})
         end
+
         if !params[:partner_cpc_fee].nil?
           campaign_data = campaign_data.merge({"PartnerCPCFee" => params[:partner_cpc_fee]})
         end
