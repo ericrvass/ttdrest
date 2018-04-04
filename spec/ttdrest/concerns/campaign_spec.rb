@@ -10,6 +10,19 @@ describe Ttdrest::Client do
       let(:budget)      { 1.01 }
       let(:start_date)  { Date.today }
 
+      describe "campaign_flights" do
+        it "set CampaignFlights" do
+          dtiac = [ {
+            'StartDateInclusiveUTC' => ad_campaign.start_at,
+            'BudgetInAdvertiserCurrency' => 'USD',
+            'DailyTargetInAdvertiserCurrency' => ad_campaign.ad_group.daily_budget
+          ]
+          expect(
+            client.build_campaign_data(campaign_id, name, budget, start_date, [], { campaign_flights: dtiac })
+          ).to include({ "CampaignFlights" => dtiac })
+        end
+      end
+
       context "EndDate" do
         it 'sets EndDate to nil when end_date is nil' do
           expect(
