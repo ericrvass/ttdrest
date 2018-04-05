@@ -79,7 +79,7 @@ module Ttdrest
         end
 
         if params[:campaign_flights].present?
-          campaign_data = campaign_data.merge({"CampaignFlights" => params[:campaign_flights]})
+          campaign_data = campaign_data.merge({ "CampaignFlights" => params[:campaign_flights] })
         end
 
         # Accepts a date
