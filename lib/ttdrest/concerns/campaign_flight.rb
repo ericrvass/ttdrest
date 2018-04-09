@@ -12,7 +12,8 @@ module Ttdrest
             'StartDateInclusiveUTC' => start_date,
             'EndDateExclusiveUTC' => end_date
           }
-          return data_put("/campaignflight", 'application/json', flight_data.to_json)
+          result = data_put("/campaignflight", 'application/json', flight_data.to_json)
+          return result
         end
       end
     end
