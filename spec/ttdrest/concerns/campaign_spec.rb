@@ -10,31 +10,6 @@ describe Ttdrest::Client do
       let(:budget)      { 1.01 }
       let(:start_date)  { Date.today }
 
-      describe "campaign_flights" do
-        let(:dtiac) {
-          [ {
-            'CampaignId' => 1,
-            'CampaignFlightId' => 1,
-            'StartDateInclusiveUTC' => start_date,
-            'EndDateExclusiveUTC' => 1.month.from_now,
-            'BudgetInAdvertiserCurrency' => 'USD',
-            'DailyTargetInAdvertiserCurrency' => budget
-          }]
-        }
-        it "set CampaignFlights" do
-
-          expect(
-            client.build_campaign_data(campaign_id, name, budget, start_date, [], { campaign_flights: dtiac })
-          ).to include({ "CampaignFlights" => dtiac })
-        end
-
-        it "does not set CampaignFlights when campaign_flights does not exist" do
-          expect(
-            client.build_campaign_data(campaign_id, name, budget, start_date, [], {})
-          ).to_not include({ "CampaignFlights" => dtiac })
-        end
-      end
-
       context "EndDate" do
         it 'sets EndDate to nil when end_date is nil' do
           expect(

@@ -78,10 +78,6 @@ module Ttdrest
           campaign_data = campaign_data.merge({"DailyBudgetInImpressions" => params[:daily_budget_in_impressions]})
         end
 
-        if params[:campaign_flights].present?
-          campaign_data = campaign_data.merge({ "CampaignFlights" => params[:campaign_flights] })
-        end
-
         # Accepts a date
         # nil
         # or, if we're not sending the key, nothing (no update)
