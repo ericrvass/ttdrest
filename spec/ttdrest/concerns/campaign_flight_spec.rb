@@ -24,7 +24,14 @@ describe Ttdrest::Client do
       context "update" do
         it 'sets EndDate to nil when end_date is nil' do
           expect(client).to receive(:data_put).with("/campaignflight", "application/json", flight_data.to_json)
-          client.update_campaign_flight(campaign_id, campaign_flight_id, budget, daily_budget, start_date, end_date)
+          client.update_campaign_flight(
+            campaign_id: campaign_id,
+            campaign_flight_id: campaign_flight_id,
+            budget: budget,
+            daily_budget: daily_budget,
+            start_date: start_date,
+            end_date: end_date
+          )
         end
       end
     end

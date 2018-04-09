@@ -2,7 +2,7 @@ module Ttdrest
   module Concerns
     module CampaignFlight
 
-      def update_campaign_flight(campaign_id, campaign_flight_id, budget, daily_budget, start_date, end_date)
+      def update_campaign_flight(campaign_id:, campaign_flight_id:, budget:, daily_budget:, start_date:, end_date:)
         if campaign_id && campaign_flight_id
           flight_data = {
             'BudgetInAdvertiserCurrency' => budget,
