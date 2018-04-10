@@ -3,6 +3,7 @@ require "ttdrest/concerns/ad_group"
 require "ttdrest/concerns/advertiser"
 require "ttdrest/concerns/audience"
 require "ttdrest/concerns/campaign"
+require "ttdrest/concerns/campaign_flight"
 require "ttdrest/concerns/creative"
 require "ttdrest/concerns/data_group"
 require "ttdrest/concerns/dmp"
@@ -19,6 +20,7 @@ module Ttdrest
     include Ttdrest::Concerns::Advertiser
     include Ttdrest::Concerns::Audience
     include Ttdrest::Concerns::Campaign
+    include Ttdrest::Concerns::CampaignFlight
     include Ttdrest::Concerns::Creative
     include Ttdrest::Concerns::DataGroup
     include Ttdrest::Concerns::Dmp

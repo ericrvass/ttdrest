@@ -33,6 +33,12 @@ module Ttdrest
             image_data = image_data.merge({"IsSecurable" => params[:is_securable]})
           end
 
+          if !params[:third_party_tracking_tags].nil?
+            image_data = image_data.merge({
+              ThirdPartyTrackingTags: [ params[:third_party_tracking_tags] ] 
+            })
+          end
+
           creative_data = creative_data.merge({"ImageAttributes" => image_data})
 
           result = data_post(path, content_type, creative_data.to_json)
