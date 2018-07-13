@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: post
-    uri: https://v3/creative/query/advertiser
+    uri: https:/v3/myreports/reportexecution/query/advertisers
     body:
       encoding: UTF-8
       string: '{"AdvertiserId":"advertiser_id","PageStartIndex":0,"PageSize":null}'
