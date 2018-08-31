@@ -54,15 +54,15 @@ RSpec.describe 'Base Concern' do
     end
 
     it 'is true when the http code is 429' do
-      expect(client.retryable_http_error?(faux_response.new(code: 429))).to be_truthy
+      expect(client.retryable_http_error?(faux_response.new(code: '429'))).to be_truthy
     end
 
     it 'is true when in the 500 range' do
-      expect(client.retryable_http_error?(faux_response.new(code: 501))).to be_truthy
+      expect(client.retryable_http_error?(faux_response.new(code: '501'))).to be_truthy
     end
 
     it 'is false when the http code is 404' do
-      expect(client.retryable_http_error?(faux_response.new(code: 404))).to be_falsy
+      expect(client.retryable_http_error?(faux_response.new(code: '404'))).to be_falsy
     end
   end
 
@@ -96,7 +96,7 @@ RSpec.describe 'Base Concern' do
     end
 
     it 'returns the response when successful' do
-      response = faux_response.new(code: 200)
+      response = faux_response.new(code: '200')
 
       expect(connection).to receive(:request).with(request).and_return(response)
       expect(client.perform_request(request, connection)).to eq response
