@@ -39,7 +39,7 @@ module Ttdrest
 
       def retryable_http_error?(response)
         response && (
-          response.code == 429 || (500..599).include?(response.code)
+          response.code == '429' || (500..599).include?(response.code.to_i)
         )
       end
 
