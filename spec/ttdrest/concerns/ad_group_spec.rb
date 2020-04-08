@@ -8,6 +8,7 @@ describe Ttdrest::Client do
       let(:ad_group_id) { 'njutzfg' }
       let(:campaign_id) { 'SampleCampaign' }
       let(:name)        { 'Test AdGroup' }
+      let(:is_classic) { true }
       let(:budget_settings) do
         {
           "Budget": {  
@@ -86,6 +87,7 @@ describe Ttdrest::Client do
         {
           description: description,
           is_enabled: is_enabled,
+          is_classic: is_classic,
           industry_category_id: industry_category_id,
           frequency_settings: frequency_settings,
           site_targeting: site_targeting,
@@ -556,6 +558,34 @@ describe Ttdrest::Client do
               expect(
                 client.build_ad_group_data(ad_group_id, campaign_id, name, budget_settings, base_bid_cpm, max_bid_cpm, creative_ids, params)['RTBAttributes'].keys
               ).to_not include("DataElementAdjustments")
+            end
+          end
+        end
+
+        describe 'is_classic' do
+          it 'determines the value of IsClassic' do
+            expect(
+              client.build_ad_group_data(ad_group_id, campaign_id, name, budget_settings, base_bid_cpm, max_bid_cpm, creative_ids, params)
+            ).to include('IsClassic' => true)
+          end
+
+          context 'when nil' do
+            let(:is_classic) { nil }
+
+            it 'defaults to true, which is legacy functionality' do
+            expect(
+              client.build_ad_group_data(ad_group_id, campaign_id, name, budget_settings, base_bid_cpm, max_bid_cpm, creative_ids, params)
+            ).to include('IsClassic' => true)
+            end
+          end
+
+          context 'when false' do
+            let(:is_classic) { false }
+
+            it 'sends IsClassic as false' do
+            expect(
+              client.build_ad_group_data(ad_group_id, campaign_id, name, budget_settings, base_bid_cpm, max_bid_cpm, creative_ids, params)
+            ).to include('IsClassic' => false)
             end
           end
         end

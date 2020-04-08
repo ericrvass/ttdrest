@@ -49,6 +49,13 @@ module Ttdrest
         if !name.nil?
           ad_group_data = ad_group_data.merge({"AdGroupName" => name})
         end
+
+        if params[:is_classic].nil? || params[:is_classic]
+          ad_group_data['IsClassic'] = true
+        else
+          ad_group_data['IsClassic'] = false
+        end
+
         if !params[:description].nil?
           ad_group_data = ad_group_data.merge({"Description" => params[:description]})
         end
