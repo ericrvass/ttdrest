@@ -588,6 +588,26 @@ describe Ttdrest::Client do
             ).to include('IsClassic' => false)
             end
           end
+
+          context 'when stringy' do
+            let(:is_classic) { 'false' }
+
+            it 'sends IsClassic as true' do
+            expect(
+              client.build_ad_group_data(ad_group_id, campaign_id, name, budget_settings, base_bid_cpm, max_bid_cpm, creative_ids, params)
+            ).to include('IsClassic' => true)
+            end
+          end
+
+          context 'when non boolean object' do
+            let(:is_classic) { Date.today }
+
+            it 'sends IsClassic as true' do
+            expect(
+              client.build_ad_group_data(ad_group_id, campaign_id, name, budget_settings, base_bid_cpm, max_bid_cpm, creative_ids, params)
+            ).to include('IsClassic' => true)
+            end
+          end
         end
       end
     end
