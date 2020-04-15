@@ -573,9 +573,9 @@ describe Ttdrest::Client do
             let(:is_classic) { nil }
 
             it 'defaults to true, which is legacy functionality' do
-            expect(
-              client.build_ad_group_data(ad_group_id, campaign_id, name, budget_settings, base_bid_cpm, max_bid_cpm, creative_ids, params)
-            ).to include('IsClassic' => true)
+              expect(
+                client.build_ad_group_data(ad_group_id, campaign_id, name, budget_settings, base_bid_cpm, max_bid_cpm, creative_ids, params)
+              ).to include('IsClassic' => true)
             end
           end
 
@@ -583,9 +583,26 @@ describe Ttdrest::Client do
             let(:is_classic) { false }
 
             it 'sends IsClassic as false' do
-            expect(
-              client.build_ad_group_data(ad_group_id, campaign_id, name, budget_settings, base_bid_cpm, max_bid_cpm, creative_ids, params)
-            ).to include('IsClassic' => false)
+              expect(
+                client.build_ad_group_data(ad_group_id, campaign_id, name, budget_settings, base_bid_cpm, max_bid_cpm, creative_ids, params)
+              ).to include('IsClassic' => false)
+            end
+
+            %w(FrequencySettings SiteTargeting FoldTargeting
+            SupplyVendorAdjustments ContractTargeting SiteQualitySettings
+            GeoSegmentAdjustments DataElementAdjustments).each do |legacy_rtb_attribute|
+              it "no longer sends the classic-only rtb attribute #{legacy_rtb_attribute}" do
+                expect(
+                  client.build_ad_group_data(ad_group_id, campaign_id, name, budget_settings, base_bid_cpm, max_bid_cpm, creative_ids, params)['RTBAttributes']
+                ).to_not include(legacy_rtb_attribute)
+              end
+            end
+
+            it "no longer sends the classic-only audience attribute RecencyAdjustments" do
+                puts client.build_ad_group_data(ad_group_id, campaign_id, name, budget_settings, base_bid_cpm, max_bid_cpm, creative_ids, params)['RTBAttributes']['AudienceTargeting']
+              expect(
+                client.build_ad_group_data(ad_group_id, campaign_id, name, budget_settings, base_bid_cpm, max_bid_cpm, creative_ids, params)['RTBAttributes']['AudienceTargeting']
+              ).to_not include('RecencyAdjustments')
             end
           end
 
