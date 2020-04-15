@@ -38,6 +38,14 @@ module Ttdrest
       end
 
       def build_ad_group_data(ad_group_id, campaign_id, name, budget_settings, base_bid_cpm, max_bid_cpm, creative_ids = [], params = {})
+        if params[:is_classic].nil? || params[:is_classic]
+          build_classic_ad_group_data(ad_group_id, campaign_id, name, budget_settings, base_bid_cpm, max_bid_cpm, creative_ids, params)
+        else
+          build_megagon_ad_group_data(ad_group_id, campaign_id, name, budget_settings, base_bid_cpm, max_bid_cpm, creative_ids, params)
+        end
+      end
+
+      def build_classic_ad_group_data(ad_group_id, campaign_id, name, budget_settings, base_bid_cpm, max_bid_cpm, creative_ids, params) 
         # Build main ad group data hash
         ad_group_data = {}
         if !ad_group_id.nil?
@@ -49,12 +57,8 @@ module Ttdrest
         if !name.nil?
           ad_group_data = ad_group_data.merge({"AdGroupName" => name})
         end
-
-        if params[:is_classic].nil? || params[:is_classic]
-          ad_group_data['IsClassic'] = true
-        else
-          ad_group_data['IsClassic'] = false
-        end
+        
+        ad_group_data['IsClassic'] = true 
 
         if !params[:description].nil?
           ad_group_data = ad_group_data.merge({"Description" => params[:description]})
@@ -134,6 +138,40 @@ module Ttdrest
         return ad_group_data
       end
 
+      def build_megagon_ad_group_data(ad_group_id, campaign_id, name, budget_settings, base_bid_cpm, max_bid_cpm, creative_ids, params) 
+        {}.tap do |ad_group_data|
+          ad_group_data["AdGroupId"] = ad_group_id unless ad_group_id.nil?
+          ad_group_data["CampaignId"] = campaign_id unless campaign_id.nil?
+          ad_group_data["AdGroupName"] = name unless name.nil?
+          ad_group_data["Description"] = params[:description] unless params[:description].nil?
+          ad_group_data["IsEnabled"] = params[:is_enabled] unless params[:is_enabled].nil?
+          ad_group_data["IndustryCategoryId"] = params[:industry_category_id] unless params[:industry_category_id].nil? 
+          ad_group_data['IsClassic'] = false
+
+          {}.tap do |rtb_ad_group_data|
+            rtb_ad_group_data["BudgetSettings"] = budget_settings unless budget_settings.nil?
+            rtb_ad_group_data["BaseBidCPM"] = base_bid_cpm unless base_bid_cpm.nil?
+            rtb_ad_group_data["MaxBidCPM"] = max_bid_cpm unless max_bid_cpm.nil?
+            rtb_ad_group_data["CreativeIds"] = creative_ids unless creative_ids.empty?
+
+            unless params[:audience_id].nil?
+              {}.tap do |audience_data|
+                audience_data["AudienceId"] = params[:audience_id]
+
+                if !params[:regency_exclusion_window_in_minutes].blank?
+                  audience_data["RecencyExclusionWindowInMinutes"] = params[:regency_exclusion_window_in_minutes]
+                else
+                  audience_data["RecencyExclusionWindowInMinutes"] = 129600 #default to 129600 (90 days)
+                end
+
+                rtb_ad_group_data["AudienceTargeting"] = audience_data
+              end
+            end
+
+            ad_group_data['RTBAttributes'] = rtb_ad_group_data unless rtb_ad_group_data.empty?
+          end
+        end
+      end
     end
   end
 end
