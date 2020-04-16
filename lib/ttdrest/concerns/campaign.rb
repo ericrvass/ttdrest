@@ -50,6 +50,11 @@ module Ttdrest
           campaign_data.delete("CampaignConversionReportingColumns") if campaign_conversion_reporting_columns.empty?
         end
 
+        # On create only, support passing in additional_fee_card
+        if campaign_id.nil? && !params[:additional_fee_card].nil?
+          campaign_data['AdditionalFeeCardOnCreate'] = params[:additional_fee_card]
+        end
+
         if !name.blank?
           campaign_data = campaign_data.merge({"CampaignName" => name})
         end
