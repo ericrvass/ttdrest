@@ -51,7 +51,7 @@ module Ttdrest
         end
 
         # On create only, support passing in additional_fee_card
-        if !campaign_id.present? && !params[:additional_fee_card].nil?
+        if !campaign_id.present? && params[:additional_fee_card].present?
           campaign_data['AdditionalFeeCardOnCreate'] = params[:additional_fee_card]
         end
 
