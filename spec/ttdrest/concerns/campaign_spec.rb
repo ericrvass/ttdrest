@@ -30,6 +30,100 @@ describe Ttdrest::Client do
           ).to_not include("EndDate")
         end
       end
+
+      context 'Fees' do
+        let(:partner_cost_percentage_fee) { 1 }
+
+        let(:partner_cpm_fee) do
+          {
+            'Amount' => 0.01,
+            'CurrencyCode' => 'USD',
+          }
+        end
+
+        let(:partner_cpc_fee) do
+          {
+            'Amount' => 0.02,
+            'CurrencyCode' => 'USD',
+          }
+        end
+
+        let(:params) do
+          {
+            partner_cost_percentage_fee: partner_cost_percentage_fee,
+            partner_cpm_fee: partner_cpm_fee,
+            partner_cpc_fee: partner_cpc_fee,
+          }
+        end
+
+        it 'populates PartnerCostPercentageFee' do
+          expect(
+            client.build_campaign_data(campaign_id, name, budget, start_date, [], params)
+          ).to include({ "PartnerCostPercentageFee" => partner_cost_percentage_fee })
+        end
+
+        it 'populates PartnerCPMFee' do
+          expect(
+            client.build_campaign_data(campaign_id, name, budget, start_date, [], params)
+          ).to include({ "PartnerCPMFee" => partner_cpm_fee})
+        end
+
+        it 'populates PartnerCPCFee' do
+          expect(
+            client.build_campaign_data(campaign_id, name, budget, start_date, [], params)
+          ).to include({ "PartnerCPCFee" => partner_cpc_fee})
+        end
+
+        context 'when additional_fee_card is present' do
+          let(:additional_fee_card) do
+            {
+              "StartDateUtc" => "2020-04-15T21:15:49.0540308+00:00",
+              "Fees" => [
+                {
+                  "Description" => "sample string 1",
+                  "Amount" => 2,
+                  "FeeType" => "MediaCostPercentage"
+                },
+                {
+                  "Description" => "sample string 1",
+                  "Amount" => 2,
+                  "FeeType" => "MediaCostPercentage"
+                },
+                {
+                  "Description" => "sample string 1",
+                  "Amount" => 2,
+                  "FeeType" => "MediaCostPercentage"
+                }
+              ],
+              "OwnerId" => "sample string 2",
+              "OwnerType" => "sample string 3"
+            }
+          end
+
+          let(:params) do
+            {
+              additional_fee_card: additional_fee_card,
+            }
+          end
+
+          context 'when campaign_id is present' do
+            # this attribute is only available on create, not update
+            it 'does not send AdditionalFeeCardOnCreate' do
+              expect(
+                client.build_campaign_data(campaign_id, name, budget, start_date, [], params).keys
+              ).to_not include("AdditionalFeeCardOnCreate")
+            end
+          end
+
+          context 'when campaign_id is not present' do
+            it 'populates AdditionalFeeCardOnCreate' do
+              expect(
+                client.build_campaign_data(nil, name, budget, start_date, [], params)
+              ).to include({ "AdditionalFeeCardOnCreate" => additional_fee_card})
+            end
+          end
+        end
+      end
     end
   end
 end
