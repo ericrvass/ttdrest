@@ -3,7 +3,7 @@
 
 module Ttdrest
   module Concerns
-    module AdditionalFee
+    module AdditionalFees
       # There is no "updating" existing fees, only creating new ones with a start_date as soon as possible.
       def create_additional_fees(owner_id, owner_type, start_date, fees)
         path = '/additionalfees'
@@ -11,8 +11,8 @@ module Ttdrest
 
         additional_fees_body = {
           'StartDateUtc' => start_date.utc.strftime("%Y-%m-%dT%H:%M:%SZ"),
-          'OwnerId' = owner_id,
-          'OwnerType' => owner_typem
+          'OwnerId' => owner_id,
+          'OwnerType' => owner_type,
           'Fees' => parse_fees(fees),
         }
 
