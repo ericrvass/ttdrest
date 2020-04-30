@@ -4,19 +4,34 @@
 module Ttdrest
   module Concerns
     module AdditionalFees
-      # There is no "updating" existing fees, only creating new ones with a start_date as soon as possible.
+      def get_additional_fees(owner_id, owner_type)
+        path = "/additional_fees/#{owner_type}/#{owner_id}"
+        get(path, {})
+      end
+
+      def update_additional_fees(owner_id, owner_type, start_date, fees)
+        path = '/additionalfees'
+        content_type = 'application/json'
+        body = additional_fees_body(owner_id, owner_type, start_date, fees)
+
+        data_put(path, content_type, body.to_json) 
+      end
+
       def create_additional_fees(owner_id, owner_type, start_date, fees)
         path = '/additionalfees'
-        context_type = 'application/json'
+        content_type = 'application/json'
+        body = additional_fees_body(owner_id, owner_type, start_date, fees)
 
-        additional_fees_body = {
+        data_post(path, content_type, additional_fees_body.to_json)
+      end
+
+      def additional_fees_body(owner_id, owner_type, start_date, fees)
+        {
           'StartDateUtc' => start_date.utc.strftime("%Y-%m-%dT%H:%M:%SZ"),
           'OwnerId' => owner_id,
           'OwnerType' => owner_type,
           'Fees' => parse_fees(fees),
         }
-
-        data_post(path, context_type, additional_fees_body.to_json)
       end
 
       def parse_fees(fees)
