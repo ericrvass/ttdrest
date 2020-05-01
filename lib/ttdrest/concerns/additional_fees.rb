@@ -5,7 +5,7 @@ module Ttdrest
   module Concerns
     module AdditionalFees
       def get_additional_fees(owner_id, owner_type)
-        path = "/additional_fees/#{owner_type}/#{owner_id}"
+        path = "/additionalfees/#{owner_type}/#{owner_id}"
         get(path, {})
       end
 
@@ -22,7 +22,7 @@ module Ttdrest
         content_type = 'application/json'
         body = additional_fees_body(owner_id, owner_type, start_date, fees)
 
-        data_post(path, content_type, additional_fees_body.to_json)
+        data_post(path, content_type, body.to_json)
       end
 
       def additional_fees_body(owner_id, owner_type, start_date, fees)
