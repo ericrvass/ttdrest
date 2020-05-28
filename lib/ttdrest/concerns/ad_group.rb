@@ -57,7 +57,7 @@ module Ttdrest
         if !name.nil?
           ad_group_data = ad_group_data.merge({"AdGroupName" => name})
         end
-        
+
         ad_group_data['IsClassic'] = true 
 
         if !params[:description].nil?
@@ -147,6 +147,8 @@ module Ttdrest
           ad_group_data["IsEnabled"] = params[:is_enabled] unless params[:is_enabled].nil?
           ad_group_data["IndustryCategoryId"] = params[:industry_category_id] unless params[:industry_category_id].nil? 
           ad_group_data['IsClassic'] = false
+
+          ad_group_data['AssociatedBidLists'] = params[:associated_bid_lists] unless params[:associated_bid_lists].nil?
 
           {}.tap do |rtb_ad_group_data|
             rtb_ad_group_data["BudgetSettings"] = budget_settings unless budget_settings.nil?
