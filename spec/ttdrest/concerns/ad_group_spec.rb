@@ -82,6 +82,50 @@ describe Ttdrest::Client do
       let(:regency_exclusion_window_in_minutes) { 2147483647 }
       let(:geo_segment_adjustments) { ['a','b','c'] }
       let(:data_element_adjustments) { ['d','e','f'] }
+      let(:associated_bid_lists) do
+        [
+          {
+            "BidListId": "abc123",
+            "IsEnabled": true,
+            "IsDefaultForDimension": false,
+          },
+          {
+            "BidListId": "def234",
+            "IsEnabled": true,
+            "IsDefaultForDimension": false,
+          },
+          {
+            "BidListId": "ghi345",
+            "IsEnabled": true,
+            "IsDefaultForDimension": false,
+          }
+        ]
+      end
+
+      let(:new_bid_lists) do
+        [
+          {
+            "Name": "Foo Bid List",
+            "BidListAdjustmentType": "TargetList",
+            "IsEnabled": true,
+            "IsDefaultForDimension": false,
+            "BidLines": [
+              { "DoubleVerifyBotAvoidanceCategoryId": "sample string 1" }
+            ],
+          },
+          {
+            "Name": "Bar Bid List",
+            "BidListAdjustmentType": "BlockList",
+            "IsEnabled": true,
+            "IsDefaultForDimension": false,
+            "BidLines": [
+              { "Os": "WindowsPhoneAll" },
+              { "Os": "iOSAll" },
+              { "Os": "AndroidAll" },
+            ],
+          },
+        ]
+      end
 
       let(:params) do
         {
@@ -100,6 +144,8 @@ describe Ttdrest::Client do
           regency_exclusion_window_in_minutes: regency_exclusion_window_in_minutes,
           geo_segment_adjustments: geo_segment_adjustments,
           data_element_adjustments: data_element_adjustments,
+          associated_bid_lists: associated_bid_lists,
+          new_bid_lists: new_bid_lists,
         }
       end
 
@@ -599,10 +645,48 @@ describe Ttdrest::Client do
             end
 
             it "no longer sends the classic-only audience attribute RecencyAdjustments" do
-                puts client.build_ad_group_data(ad_group_id, campaign_id, name, budget_settings, base_bid_cpm, max_bid_cpm, creative_ids, params)['RTBAttributes']['AudienceTargeting']
               expect(
                 client.build_ad_group_data(ad_group_id, campaign_id, name, budget_settings, base_bid_cpm, max_bid_cpm, creative_ids, params)['RTBAttributes']['AudienceTargeting']
               ).to_not include('RecencyAdjustments')
+            end
+
+            describe 'megagon only params' do
+              context 'associated_bid_lists' do
+                it 'determines the value of AssociatedBidLists' do
+                  expect(
+                    client.build_ad_group_data(ad_group_id, campaign_id, name, budget_settings, base_bid_cpm, max_bid_cpm, creative_ids, params)['AssociatedBidLists']
+                  ).to eq(associated_bid_lists)
+                end
+
+                context 'when nil' do
+                  let(:associated_bid_lists) { nil }
+
+                  it 'does not contain the key at all' do
+                    expect(
+                      client.build_ad_group_data(ad_group_id, campaign_id, name, budget_settings, base_bid_cpm, max_bid_cpm, creative_ids, params).keys
+                    ).to_not include("AssociatedBidLists")
+                  end
+                end
+              end
+
+              context 'new_bid_lists' do
+                it 'determines the value of NewBidLists' do
+                  expect(
+                    client.build_ad_group_data(ad_group_id, campaign_id, name, budget_settings, base_bid_cpm, max_bid_cpm, creative_ids, params)['NewBidLists']
+                  ).to eq(new_bid_lists)
+                end
+
+                context 'when nil' do
+                  let(:new_bid_lists) { nil }
+
+                  it 'does not contain the key at all' do
+                    expect(
+                      client.build_ad_group_data(ad_group_id, campaign_id, name, budget_settings, base_bid_cpm, max_bid_cpm, creative_ids, params).keys
+                    ).to_not include("NewBidLists")
+                  end
+                end
+
+              end
             end
           end
 
@@ -610,9 +694,9 @@ describe Ttdrest::Client do
             let(:is_classic) { 'false' }
 
             it 'sends IsClassic as true' do
-            expect(
-              client.build_ad_group_data(ad_group_id, campaign_id, name, budget_settings, base_bid_cpm, max_bid_cpm, creative_ids, params)
-            ).to include('IsClassic' => true)
+              expect(
+                client.build_ad_group_data(ad_group_id, campaign_id, name, budget_settings, base_bid_cpm, max_bid_cpm, creative_ids, params)
+              ).to include('IsClassic' => true)
             end
           end
 
@@ -620,9 +704,9 @@ describe Ttdrest::Client do
             let(:is_classic) { Date.today }
 
             it 'sends IsClassic as true' do
-            expect(
-              client.build_ad_group_data(ad_group_id, campaign_id, name, budget_settings, base_bid_cpm, max_bid_cpm, creative_ids, params)
-            ).to include('IsClassic' => true)
+              expect(
+                client.build_ad_group_data(ad_group_id, campaign_id, name, budget_settings, base_bid_cpm, max_bid_cpm, creative_ids, params)
+              ).to include('IsClassic' => true)
             end
           end
         end
