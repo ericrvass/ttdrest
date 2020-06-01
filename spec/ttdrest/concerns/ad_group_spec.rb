@@ -102,6 +102,31 @@ describe Ttdrest::Client do
         ]
       end
 
+      let(:new_bid_lists) do
+        [
+          {
+            "Name": "Foo Bid List",
+            "BidListAdjustmentType": "TargetList",
+            "IsEnabled": true,
+            "IsDefaultForDimension": false,
+            "BidLines": [
+              { "DoubleVerifyBotAvoidanceCategoryId": "sample string 1" }
+            ],
+          },
+          {
+            "Name": "Bar Bid List",
+            "BidListAdjustmentType": "BlockList",
+            "IsEnabled": true,
+            "IsDefaultForDimension": false,
+            "BidLines": [
+              { "Os": "WindowsPhoneAll" },
+              { "Os": "iOSAll" },
+              { "Os": "AndroidAll" },
+            ],
+          },
+        ]
+      end
+
       let(:params) do
         {
           description: description,
@@ -120,6 +145,7 @@ describe Ttdrest::Client do
           geo_segment_adjustments: geo_segment_adjustments,
           data_element_adjustments: data_element_adjustments,
           associated_bid_lists: associated_bid_lists,
+          new_bid_lists: new_bid_lists,
         }
       end
 
@@ -625,20 +651,41 @@ describe Ttdrest::Client do
             end
 
             describe 'megagon only params' do
-              it 'determines the value of AssociatedBidLists' do
-                expect(
-                  client.build_ad_group_data(ad_group_id, campaign_id, name, budget_settings, base_bid_cpm, max_bid_cpm, creative_ids, params)['AssociatedBidLists']
-                ).to eq(associated_bid_lists)
+              context 'associated_bid_lists' do
+                it 'determines the value of AssociatedBidLists' do
+                  expect(
+                    client.build_ad_group_data(ad_group_id, campaign_id, name, budget_settings, base_bid_cpm, max_bid_cpm, creative_ids, params)['AssociatedBidLists']
+                  ).to eq(associated_bid_lists)
+                end
+
+                context 'when nil' do
+                  let(:associated_bid_lists) { nil }
+
+                  it 'does not contain the key at all' do
+                    expect(
+                      client.build_ad_group_data(ad_group_id, campaign_id, name, budget_settings, base_bid_cpm, max_bid_cpm, creative_ids, params).keys
+                    ).to_not include("AssociatedBidLists")
+                  end
+                end
               end
 
-              context 'when nil' do
-                let(:associated_bid_lists) { nil }
-
-                it 'does not contain the key at all' do
+              context 'new_bid_lists' do
+                it 'determines the value of NewBidLists' do
                   expect(
-                    client.build_ad_group_data(ad_group_id, campaign_id, name, budget_settings, base_bid_cpm, max_bid_cpm, creative_ids, params).keys
-                  ).to_not include("AssociatedBidLists")
+                    client.build_ad_group_data(ad_group_id, campaign_id, name, budget_settings, base_bid_cpm, max_bid_cpm, creative_ids, params)['NewBidLists']
+                  ).to eq(new_bid_lists)
                 end
+
+                context 'when nil' do
+                  let(:new_bid_lists) { nil }
+
+                  it 'does not contain the key at all' do
+                    expect(
+                      client.build_ad_group_data(ad_group_id, campaign_id, name, budget_settings, base_bid_cpm, max_bid_cpm, creative_ids, params).keys
+                    ).to_not include("NewBidLists")
+                  end
+                end
+
               end
             end
           end

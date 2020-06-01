@@ -149,6 +149,7 @@ module Ttdrest
           ad_group_data['IsClassic'] = false
 
           ad_group_data['AssociatedBidLists'] = params[:associated_bid_lists] unless params[:associated_bid_lists].nil?
+          ad_group_data['NewBidLists'] = params[:new_bid_lists] unless params[:new_bid_lists].nil?
 
           {}.tap do |rtb_ad_group_data|
             rtb_ad_group_data["BudgetSettings"] = budget_settings unless budget_settings.nil?
