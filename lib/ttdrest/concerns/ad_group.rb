@@ -156,6 +156,7 @@ module Ttdrest
             rtb_ad_group_data["BaseBidCPM"] = base_bid_cpm unless base_bid_cpm.nil?
             rtb_ad_group_data["MaxBidCPM"] = max_bid_cpm unless max_bid_cpm.nil?
             rtb_ad_group_data["CreativeIds"] = creative_ids unless creative_ids.empty?
+            rtb_ad_group_data['QualityAllianceViewabilityTargeting'] = params[:quality_alliance_viewability_targeting] unless params[:quality_alliance_viewability_targeting].nil?
 
             unless params[:audience_id].nil?
               {}.tap do |audience_data|

@@ -127,6 +127,12 @@ describe Ttdrest::Client do
         ]
       end
 
+      let(:quality_alliance_viewability_targeting) do
+        {
+          "QualityAllianceViewabilityEnabledState": "Disabled"
+        }
+      end
+
       let(:params) do
         {
           description: description,
@@ -146,6 +152,7 @@ describe Ttdrest::Client do
           data_element_adjustments: data_element_adjustments,
           associated_bid_lists: associated_bid_lists,
           new_bid_lists: new_bid_lists,
+          quality_alliance_viewability_targeting: quality_alliance_viewability_targeting,
         }
       end
 
@@ -685,7 +692,24 @@ describe Ttdrest::Client do
                     ).to_not include("NewBidLists")
                   end
                 end
+              end
 
+              context 'quality_alliance_viewability_targeting' do
+                it 'determines the value of QualityAllianceViewabilityTargeting' do
+                  expect(
+                    client.build_ad_group_data(ad_group_id, campaign_id, name, budget_settings, base_bid_cpm, max_bid_cpm, creative_ids, params)['RTBAttributes']['QualityAllianceViewabilityTargeting']
+                  ).to eq(quality_alliance_viewability_targeting)
+                end
+
+                context 'when nil' do
+                  let(:quality_alliance_viewability_targeting) { nil }
+
+                  it 'does not contain the key at all' do
+                    expect(
+                      client.build_ad_group_data(ad_group_id, campaign_id, name, budget_settings, base_bid_cpm, max_bid_cpm, creative_ids, params)['RTBAttributes'].keys
+                    ).to_not include("QualityAllianceViewabilityTargeting")
+                  end
+                end
               end
             end
           end
