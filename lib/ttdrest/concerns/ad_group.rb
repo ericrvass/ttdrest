@@ -150,6 +150,7 @@ module Ttdrest
 
           ad_group_data['AssociatedBidLists'] = params[:associated_bid_lists] unless params[:associated_bid_lists].nil?
           ad_group_data['NewBidLists'] = params[:new_bid_lists] unless params[:new_bid_lists].nil?
+          ad_group_data['PredictiveClearingEnabled'] = params[:predictive_clearing] unless params[:predictive_clearing].nil?
 
           {}.tap do |rtb_ad_group_data|
             rtb_ad_group_data["BudgetSettings"] = budget_settings unless budget_settings.nil?
@@ -157,6 +158,9 @@ module Ttdrest
             rtb_ad_group_data["MaxBidCPM"] = max_bid_cpm unless max_bid_cpm.nil?
             rtb_ad_group_data["CreativeIds"] = creative_ids unless creative_ids.empty?
             rtb_ad_group_data['QualityAllianceViewabilityTargeting'] = params[:quality_alliance_viewability_targeting] unless params[:quality_alliance_viewability_targeting].nil?
+            rtb_ad_group_data["ContractTargeting"] = params[:contract_targeting] unless params[:contract_targeting].nil?
+            rtb_ad_group_data["ROIGoal"] = params[:roi_goal] unless params[:roi_goal].nil?
+            rtb_ad_group_data["DimensionalBiddingAutoOptimizationSettings"] = params[:dimensional_bidding_auto_optimization_settings] unless params[:dimensional_bidding_auto_optimization_settings].nil?
 
             unless params[:audience_id].nil?
               {}.tap do |audience_data|
