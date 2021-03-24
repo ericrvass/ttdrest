@@ -52,6 +52,9 @@ module Ttdrest
         if !params[:description].nil?
           advertiser_data = advertiser_data.merge({"Description" => params[:description]})
         end
+        if !params[:domain_address].blank?
+          advertiser_data["DomainAddress"] = params[:domain_address]
+        end
         if !params[:currency_code].nil?
           advertiser_data = advertiser_data.merge({"CurrencyCode" => params[:currency_code]})
         end
