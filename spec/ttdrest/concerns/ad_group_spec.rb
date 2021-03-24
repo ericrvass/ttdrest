@@ -642,7 +642,7 @@ describe Ttdrest::Client do
             end
 
             %w(FrequencySettings SiteTargeting FoldTargeting
-            SupplyVendorAdjustments ContractTargeting SiteQualitySettings
+            SupplyVendorAdjustments SiteQualitySettings
             GeoSegmentAdjustments DataElementAdjustments).each do |legacy_rtb_attribute|
               it "no longer sends the classic-only rtb attribute #{legacy_rtb_attribute}" do
                 expect(
