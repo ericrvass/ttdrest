@@ -30,7 +30,8 @@ module Ttdrest
       end
 
       def check_response(response)
-        if response.code.eql?("403")
+        # TTD API Token Error Code Updates : https://api.thetradedesk.com/v3/portal/api/doc/UpgradeSupportArchives#auth-token-error-code-updates
+        if response.code.in?(["401", "403"])
           raise AuthorizationFailedError
         elsif retryable_http_error?(response)
           raise RecoverableHttpError.new('', response)
