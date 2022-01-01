@@ -66,6 +66,16 @@ RSpec.describe 'Base Concern' do
     end
   end
 
+  describe '#check_response' do
+    it 'raises AuthorizationFailedError when not authorized response (code 401 )' do
+      expect { client.check_response(faux_response.new(code: '401')) }.to raise_error(Ttdrest::AuthorizationFailedError)
+    end
+
+    it 'raises AuthorizationFailedError when not authorized response (legacy code 403 )' do
+      expect { client.check_response(faux_response.new(code: '403')) }.to raise_error(Ttdrest::AuthorizationFailedError)
+    end
+  end
+
   describe '#perform_request' do
     let(:connection) { double() }
     let(:request) { double() }
