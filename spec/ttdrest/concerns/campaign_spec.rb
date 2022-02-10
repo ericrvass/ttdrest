@@ -32,14 +32,14 @@ describe Ttdrest::Client do
       end
 
       context 'Fees' do
-        let(:partner_cost_percentage_fee) { 1 }
+        # let(:partner_cost_percentage_fee) { 1 }
 
-        let(:partner_cpm_fee) do
-          {
-            'Amount' => 0.01,
-            'CurrencyCode' => 'USD',
-          }
-        end
+        # let(:partner_cpm_fee) do
+        #   {
+        #     'Amount' => 0.01,
+        #     'CurrencyCode' => 'USD',
+        #   }
+        # end
 
         let(:partner_cpc_fee) do
           {
@@ -50,23 +50,23 @@ describe Ttdrest::Client do
 
         let(:params) do
           {
-            partner_cost_percentage_fee: partner_cost_percentage_fee,
-            partner_cpm_fee: partner_cpm_fee,
+            # partner_cost_percentage_fee: partner_cost_percentage_fee,
+            # partner_cpm_fee: partner_cpm_fee,
             partner_cpc_fee: partner_cpc_fee,
           }
         end
 
-        it 'populates PartnerCostPercentageFee' do
-          expect(
-            client.build_campaign_data(campaign_id, name, budget, start_date, [], params)
-          ).to include({ "PartnerCostPercentageFee" => partner_cost_percentage_fee })
-        end
+        # it 'populates PartnerCostPercentageFee' do
+        #   expect(
+        #     client.build_campaign_data(campaign_id, name, budget, start_date, [], params)
+        #   ).to include({ "PartnerCostPercentageFee" => partner_cost_percentage_fee })
+        # end
 
-        it 'populates PartnerCPMFee' do
-          expect(
-            client.build_campaign_data(campaign_id, name, budget, start_date, [], params)
-          ).to include({ "PartnerCPMFee" => partner_cpm_fee})
-        end
+        # it 'populates PartnerCPMFee' do
+        #   expect(
+        #     client.build_campaign_data(campaign_id, name, budget, start_date, [], params)
+        #   ).to include({ "PartnerCPMFee" => partner_cpm_fee})
+        # end
 
         it 'populates PartnerCPCFee' do
           expect(
