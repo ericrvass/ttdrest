@@ -133,6 +133,15 @@ describe Ttdrest::Client do
         }
       end
 
+      let(:dimensional_bidding_auto_optimization_settings) do
+        [
+          "HasDomainFragmentId",
+          "HasAdFormatId",
+          "HasDeviceTypeId",
+          "HasSupplyVendorId"
+        ]
+      end
+
       let(:params) do
         {
           description: description,
@@ -153,6 +162,7 @@ describe Ttdrest::Client do
           associated_bid_lists: associated_bid_lists,
           new_bid_lists: new_bid_lists,
           quality_alliance_viewability_targeting: quality_alliance_viewability_targeting,
+          dimensional_bidding_auto_optimization_settings: dimensional_bidding_auto_optimization_settings
         }
       end
 
@@ -708,6 +718,24 @@ describe Ttdrest::Client do
                     expect(
                       client.build_ad_group_data(ad_group_id, campaign_id, name, budget_settings, base_bid_cpm, max_bid_cpm, creative_ids, params)['RTBAttributes'].keys
                     ).to_not include("QualityAllianceViewabilityTargeting")
+                  end
+                end
+              end
+
+              context 'dimensional_bidding_auto_optimization_settings' do
+                it 'determines the value of DimensionalBiddingAutoOptimizationSettings' do
+                  expect(
+                    client.build_ad_group_data(ad_group_id, campaign_id, name, budget_settings, base_bid_cpm, max_bid_cpm, creative_ids, params)['RTBAttributes']['DimensionalBiddingAutoOptimizationSettings']
+                  ).to eq(dimensional_bidding_auto_optimization_settings)
+                end
+
+                context 'when nil' do
+                  let(:dimensional_bidding_auto_optimization_settings) { nil }
+
+                  it 'does not contain the key at all' do
+                    expect(
+                    client.build_ad_group_data(ad_group_id, campaign_id, name, budget_settings, base_bid_cpm, max_bid_cpm, creative_ids, params)['RTBAttributes']['DimensionalBiddingAutoOptimizationSettings']
+                  ).to eq([])
                   end
                 end
               end
