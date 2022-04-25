@@ -161,6 +161,7 @@ module Ttdrest
             rtb_ad_group_data["ContractTargeting"] = params[:contract_targeting] unless params[:contract_targeting].nil?
             rtb_ad_group_data["ROIGoal"] = params[:roi_goal] unless params[:roi_goal].nil?
             rtb_ad_group_data["DimensionalBiddingAutoOptimizationSettings"] = params[:dimensional_bidding_auto_optimization_settings] unless params[:dimensional_bidding_auto_optimization_settings].nil?
+            rtb_ad_group_data["KoaOptimizationSettings"] = params[:koa_optimization_settings] unless params[:koa_optimization_settings].nil?
 
             unless params[:audience_id].nil?
               {}.tap do |audience_data|

@@ -148,8 +148,8 @@ module Ttdrest
         end
       end
 
-      # Defaulting to a 1 hour timeout
-      def auth_post(client_login, client_password, expiration_minutes = 60 * 24 * 30)
+      # Defaulting to a 24 hour timeout
+      def auth_post(client_login, client_password, expiration_minutes = 60 * 24)
         begin
           path = "/#{VERSION}/authentication"
           request = Net::HTTP::Post.new(path, initheader = {'Content-Type' =>'application/json'})
