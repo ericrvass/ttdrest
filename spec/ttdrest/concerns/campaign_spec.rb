@@ -31,6 +31,48 @@ describe Ttdrest::Client do
         end
       end
 
+      describe 'objective' do
+        let(:params) { { objective: "Awareness" } }
+
+        it 'populates Objective' do
+          expect(
+            client.build_campaign_data(campaign_id, name, budget, start_date, [], params)
+          ).to include({ "Objective" => "Awareness" })
+        end
+      end
+
+      describe 'primary_goal' do
+        let(:goal_data){ { "MaximizeReach" => true } }
+        let(:params){ { primary_goal: goal_data } }
+
+        it 'populates PrimaryGoal' do
+          expect(
+            client.build_campaign_data(campaign_id, name, budget, start_date, [], params)
+          ).to include({ "PrimaryGoal" => goal_data })
+        end
+      end
+
+      describe 'secondary_goal' do
+        let(:goal_data){ { "CTRInPercent" => 0.8 } }
+        let(:params){ { secondary_goal: goal_data } }
+
+        it 'populates SecondaryGoal' do
+          expect(
+            client.build_campaign_data(campaign_id, name, budget, start_date, [], params)
+          ).to include({ "SecondaryGoal" => goal_data })
+        end
+      end
+
+      describe 'primary channel' do
+        let(:params){ { primary_channel: "Display" } }
+
+        it 'populates PrimaryChannel' do
+          expect(
+            client.build_campaign_data(campaign_id, name, budget, start_date, [], params)
+          ).to include({ "PrimaryChannel" => "Display" })
+        end
+      end
+
       context 'Fees' do
         let(:partner_cpc_fee) do
           {
