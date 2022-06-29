@@ -83,6 +83,24 @@ module Ttdrest
           campaign_data = campaign_data.merge({"DailyBudgetInImpressions" => params[:daily_budget_in_impressions]})
         end
 
+        # Latest KOA fields
+
+        if !params[:objective].nil?
+          campaign_data = campaign_data.merge({"Objective" => params[:objective]})
+        end
+
+        if !params[:primary_goal].nil?
+          campaign_data = campaign_data.merge({"PrimaryGoal" => params[:primary_goal]})
+        end
+
+        if !params[:secondary_goal].nil?
+          campaign_data = campaign_data.merge({"SecondaryGoal" => params[:secondary_goal]})
+        end
+
+        if !params[:primary_channel].nil?
+          campaign_data = campaign_data.merge({"PrimaryChannel" => params[:primary_channel]})
+        end
+
         # Accepts a date
         # nil
         # or, if we're not sending the key, nothing (no update)
