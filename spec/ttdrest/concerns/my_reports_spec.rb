@@ -21,7 +21,7 @@ describe Ttdrest::Client do
               'application/json',
               a_string_matching("\"ReportDateUTC\":\"#{report_date.to_date}")
             )
-            expect(client.get_my_reports(report_date)).to be_nil
+            expect(client.get_my_reports(report_date, { advertiser_id: "advertiser_id" })).to be_nil
           end
         end
 
@@ -53,7 +53,7 @@ describe Ttdrest::Client do
         end
 
         context 'with schedule name contains' do
-          let(:options) { { report_schedule_name_contains: 'Data Elements', } }
+          let(:options) { { report_schedule_name_contains: 'Data Elements', advertiser_id: "advertiser_id"} }
           it 'fetches reports for a date' do
             VCR.use_cassette('get_my_reports_with_date_and_schedule_name') do
               expect(client).to receive(:data_post).with(

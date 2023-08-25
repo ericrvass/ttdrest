@@ -9,6 +9,9 @@ module Ttdrest
 
       def get_my_reports(report_date, options = {})
         advertiser_id = self.advertiser_id || options[:advertiser_id]
+        if advertiser_id == nil then
+            return
+        end
         path = '/myreports/reportexecution/query/advertisers'
         report_data = {}.tap do |search_params|
           search_params['AdvertiserIds'] = [advertiser_id]
