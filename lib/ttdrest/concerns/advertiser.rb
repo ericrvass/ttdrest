@@ -82,6 +82,12 @@ module Ttdrest
         if !params[:industry_category_id].nil?
           advertiser_data = advertiser_data.merge({"IndustryCategoryId" => params[:industry_category_id]})
         end
+        if !params[:advertiser_name_dsa].nil?
+          advertiser_data = advertiser_data.merge({"AdvertiserNameDsa" => params[:advertiser_name_dsa]})
+        end
+        if !params[:payer_name_dsa].nil?
+          advertiser_data = advertiser_data.merge({"PayerNameDsa" => params[:payer_name_dsa]})
+        end
         return advertiser_data
       end
       
